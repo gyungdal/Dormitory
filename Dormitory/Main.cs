@@ -12,10 +12,74 @@ namespace Dormitory
 {
     public partial class Main : Form
     {
-        public Main()
-        {
-            InitializeComponent();
+        private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR};
+        private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
+
+        private void button1_Click(object sender, EventArgs e) {
+            KeyValuePair<string, bool> item =  (KeyValuePair<string, bool>)this.comboBox1.SelectedItem;
+            MessageBox.Show(item.Key + ",state : " + item.Value);
         }
+
+        private List<KeyValuePair<string, bool>> getListBoxResource(permission p) {
+            switch (p) {
+                case permission.ADMIN:
+                    return this.admin;
+                case permission.NORMAL_TEACHER:
+                    return this.teacher;
+                case permission.DORMITORY_TEACHER:
+                    return this.dormitoryTeacher;
+                default:
+                    MessageBox.Show("WTF?");
+                    break;
+            }
+            return null;
+        }
+        
+        private permission getPermissionSeleted() {
+            switch (this.comboBox1.SelectedText) {
+                case "최고 관리자":
+                    return permission.ADMIN;
+                case "사감 선생님":
+                    return permission.DORMITORY_TEACHER;
+                case "일반 교사":
+                    return permission.NORMAL_TEACHER;
+                default:
+                    return permission.ERROR;
+            }
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+            
+            List<KeyValuePair<string, bool>> items = getListBoxResource(getPermissionSeleted());
+            if(items != null) {
+                foreach(KeyValuePair<string ,bool> item in items) {
+                    this.checkedListBox1.Items.Add(item.Key, item.Value);
+                }
+            }
+        }
+
+        public Main(){
+            InitializeComponent();
+            isSuperAdmin();
+        }
+        
+        private void isSuperAdmin() {
+            //최고 관리자인지 확인하는 부분
+            bool isAdmin = true; // test code
+
+            if (!isAdmin) {
+                this.tabControl1.TabPages.RemoveAt(2);
+                this.admin = this.teacher = this.dormitoryTeacher = null;
+            } else {
+                this.admin = new List<KeyValuePair<string, bool>>();
+                this.teacher = new List<KeyValuePair<string, bool>>();
+                this.dormitoryTeacher = new List<KeyValuePair<string, bool>>();
+                this.tabPage3.Enter += (s, e) => {
+                    this.comboBox1.Items.AddRange(new string[] { "최고 관리자", "사감 선생님", "일반 교사" });
+                    this.button1.Text = "저장";
+                };
+            }
+         }
+
 
         /*
          * 1. 학생 명부 관리
@@ -35,5 +99,6 @@ namespace Dormitory
          *      미안하다 경식아 치킨 살게
          * 
          * */
+
     }
 }
