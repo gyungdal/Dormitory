@@ -51,7 +51,11 @@ namespace Dormitory
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
             //이전에 선택한 항목이 있는 경우
             if (this.permissionPrev.Length != 0) {
-                getListBoxResource(getPermissionSeleted(permissionPrev));
+                List<KeyValuePair<string, bool>> prevItems = getListBoxResource(getPermissionSeleted(permissionPrev));
+                prevItems.Clear();
+                for(int i = 0;i<this.checkedListBox1.Items.Count;i++) {
+                    prevItems.Add(new KeyValuePair<string, bool>(this.checkedListBox1.Items[i].ToString(), this.checkedListBox1.GetItemChecked(i)));
+                }
             }
             this.checkedListBox1.Items.Clear();
             List<KeyValuePair<string, bool>> items = getListBoxResource(getPermissionSeleted(this.comboBox1.Text));
