@@ -16,8 +16,8 @@ namespace Dormitory
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
 
         private void button1_Click(object sender, EventArgs e) {
-            KeyValuePair<string, bool> item =  (KeyValuePair<string, bool>)this.comboBox1.SelectedItem;
-            MessageBox.Show(item.Key + ",state : " + item.Value);
+            string userType = this.comboBox1.Text;
+            MessageBox.Show(userType);
         }
 
         private List<KeyValuePair<string, bool>> getListBoxResource(permission p) {
@@ -36,7 +36,7 @@ namespace Dormitory
         }
         
         private permission getPermissionSeleted() {
-            switch (this.comboBox1.SelectedText) {
+            switch (this.comboBox1.Text) {
                 case "최고 관리자":
                     return permission.ADMIN;
                 case "사감 선생님":
@@ -49,6 +49,7 @@ namespace Dormitory
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
             
+            this.checkedListBox1.Items.Clear();
             List<KeyValuePair<string, bool>> items = getListBoxResource(getPermissionSeleted());
             if(items != null) {
                 foreach(KeyValuePair<string ,bool> item in items) {
@@ -60,6 +61,12 @@ namespace Dormitory
         public Main(){
             InitializeComponent();
             isSuperAdmin();
+        }
+
+        private void test() {
+            this.admin.Add(new KeyValuePair<string, bool>("YO", false));
+            this.admin.Add(new KeyValuePair<string, bool>("HOME", false));
+            this.admin.Add(new KeyValuePair<string, bool>(".?", false));
         }
         
         private void isSuperAdmin() {
@@ -75,6 +82,8 @@ namespace Dormitory
                 this.dormitoryTeacher = new List<KeyValuePair<string, bool>>();
                 this.tabPage3.Enter += (s, e) => {
                     this.comboBox1.Items.AddRange(new string[] { "최고 관리자", "사감 선생님", "일반 교사" });
+                    test();
+                    this.comboBox1.SelectedIndex = 0;
                     this.button1.Text = "저장";
                 };
             }
