@@ -12,6 +12,7 @@ namespace Dormitory
 {
     public partial class Main : Form
     {
+        string permissionPrev = "";
         private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR};
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
 
@@ -35,8 +36,8 @@ namespace Dormitory
             return null;
         }
         
-        private permission getPermissionSeleted() {
-            switch (this.comboBox1.Text) {
+        private permission getPermissionSeleted(string text) {
+            switch (text) {
                 case "최고 관리자":
                     return permission.ADMIN;
                 case "사감 선생님":
@@ -48,14 +49,18 @@ namespace Dormitory
             }
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            
+            //이전에 선택한 항목이 있는 경우
+            if (this.permissionPrev.Length != 0) {
+                getListBoxResource(getPermissionSeleted(permissionPrev));
+            }
             this.checkedListBox1.Items.Clear();
-            List<KeyValuePair<string, bool>> items = getListBoxResource(getPermissionSeleted());
+            List<KeyValuePair<string, bool>> items = getListBoxResource(getPermissionSeleted(this.comboBox1.Text));
             if(items != null) {
                 foreach(KeyValuePair<string ,bool> item in items) {
                     this.checkedListBox1.Items.Add(item.Key, item.Value);
                 }
             }
+            this.permissionPrev = this.comboBox1.Text;
         }
 
         public Main(){
