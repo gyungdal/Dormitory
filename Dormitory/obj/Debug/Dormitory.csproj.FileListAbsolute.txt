@@ -1,0 +1,10 @@
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\bin\Debug\Dormitory.exe.config
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\bin\Debug\Dormitory.exe
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\bin\Debug\Dormitory.pdb
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\obj\Debug\Dormitory.csprojResolveAssemblyReference.cache
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\obj\Debug\Dormitory.Login.resources
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\obj\Debug\Dormitory.Properties.Resources.resources
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\obj\Debug\Dormitory.csproj.GenerateResource.Cache
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\obj\Debug\Dormitory.exe
+c:\users\xenoaron\documents\visual studio 2017\Projects\Dormitory\Dormitory\obj\Debug\Dormitory.pdb
+C:\Users\XenoAron\Documents\Visual Studio 2017\Projects\Dormitory\Dormitory\obj\Debug\Dormitory.Main.resources
