@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.WinFormsUtilities;
-
+using Newtonsoft.Json;
 
 namespace Dormitory
 {
@@ -23,7 +23,6 @@ namespace Dormitory
             string userType = this.comboBox1.Text;
             MessageBox.Show(userType);
         }
-
         private List<KeyValuePair<string, bool>> getListBoxResource(permission p) {
             switch (p) {
                 case permission.ADMIN:
@@ -66,10 +65,9 @@ namespace Dormitory
                 foreach(KeyValuePair<string ,bool> item in items) {
                     this.checkedListBox1.Items.Add(item.Key, item.Value);
                 }
-            }
+            } 
             this.permissionPrev = this.comboBox1.Text;
         }
-
         public Main(){
             InitializeComponent();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
