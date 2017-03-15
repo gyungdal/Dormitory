@@ -16,7 +16,8 @@ namespace Dormitory
 {
     public partial class Main : Form
     {
-        private JObject student; 
+        private bool isAdmin;
+        private JObject student, score; 
         string permissionPrev = "";
         private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
@@ -164,9 +165,11 @@ namespace Dormitory
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 this.LoadExcelToDataGridView(openFileDialog.FileName);
         }
-
+        
         private void DataGridView1_CellValueChanged(object sender, System.Windows.Forms.DataGridViewCellEventArgs e){
-
+            if (this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()] == null)
+                gridParser(this.dataGridView1);
+            MessageBox.Show(this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()].ToString());
         }
 
         private void test() {
@@ -177,8 +180,7 @@ namespace Dormitory
         
         private void isSuperAdmin() {
             //최고 관리자인지 확인하는 부분
-            bool isAdmin = true; // test code
-
+            isAdmin = true;
             if (!isAdmin) {
                 this.tabControl1.TabPages.RemoveAt(2);
                 this.admin = this.teacher = this.dormitoryTeacher = null;
