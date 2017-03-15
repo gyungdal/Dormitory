@@ -17,6 +17,7 @@ namespace Dormitory
     public partial class Main : Form
     {
         private bool isAdmin;
+        private int prevTab = -1;
         private JObject student, score; 
         string permissionPrev = "";
         private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
@@ -47,11 +48,20 @@ namespace Dormitory
             throw new System.NotImplementedException();
         }
 
-        private void TabControl1_TabIndexChanged(object sender, System.EventArgs e)
+        private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e)
         {
-            throw new System.NotImplementedException();
-        }
+            if (prevTab != -1 || prevTab != e.TabPageIndex)
+            {
+                prevTab = e.TabPageIndex;
+                switch (prevTab)
+                {
+                    case 0:
+                        student = gridParser(this.dataGridView1);
+                        break;
 
+                }
+            }
+        }
 
         private permission getPermissionSeleted(string text) {
             switch (text) {
@@ -115,7 +125,7 @@ namespace Dormitory
             }
         }
 
-        private void gridParser(DataGridView grid)
+        private JObject gridParser(DataGridView grid)
         {
             JObject result = new JObject();
 
@@ -130,7 +140,8 @@ namespace Dormitory
                 }
                 result.Add(i.ToString(), jarray);
             }
-            student = result;
+            
+            return result;
 //            MessageBox.Show(result.ToString());
         }
 
@@ -166,10 +177,10 @@ namespace Dormitory
                 this.LoadExcelToDataGridView(openFileDialog.FileName);
         }
         
-        private void DataGridView1_CellValueChanged(object sender, System.Windows.Forms.DataGridViewCellEventArgs e){
-            if (this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()] == null)
-                gridParser(this.dataGridView1);
-            MessageBox.Show(this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()].ToString());
+        private async void DataGridView1_CellValueChanged(object sender, System.Windows.Forms.DataGridViewCellEventArgs e){
+            //if (this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()] == null)
+            //    gridParser(this.dataGridView1);
+            //MessageBox.Show(this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()].ToString());
         }
 
         private void test() {
