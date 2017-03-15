@@ -1,0 +1,12 @@
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\obj\Debug\SpreadsheetEditorWindowsForms.csprojResolveAssemblyReference.cache
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\obj\Debug\SpreadsheetEditorWindowsForms.Form1.resources
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\obj\Debug\SpreadsheetEditorWindowsForms.Properties.Resources.resources
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\obj\Debug\SpreadsheetEditorWindowsForms.csproj.GenerateResource.Cache
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\bin\Debug\SpreadsheetEditorWindowsForms.exe
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\bin\Debug\SpreadsheetEditorWindowsForms.pdb
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\bin\Debug\GemBox.Spreadsheet.dll
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\bin\Debug\GemBox.Spreadsheet.WinFormsUtilities.dll
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\bin\Debug\GemBox.Spreadsheet.xml
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\bin\Debug\GemBox.Spreadsheet.WinFormsUtilities.xml
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\obj\Debug\SpreadsheetEditorWindowsForms.exe
+D:\Develop\Project\dormitory\Excel Spreadsheet Editor in Windows Forms using GemBox.Spreadsheet\C#\SpreadsheetEditorWindowsForms\obj\Debug\SpreadsheetEditorWindowsForms.pdb

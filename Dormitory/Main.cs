@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GemBox.Spreadsheet;
+using GemBox.Spreadsheet.WinFormsUtilities;
+
 
 namespace Dormitory
 {
@@ -69,7 +72,51 @@ namespace Dormitory
 
         public Main(){
             InitializeComponent();
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             isSuperAdmin();
+        }
+
+        private void LoadExcelToDataGridView(string excelFile) {
+            ExcelFile ef = ExcelFile.Load(excelFile);
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            // From ExcelFile to DataGridView.
+            DataGridViewConverter.ExportToDataGridView(
+                ws,
+                this.dataGridView1,
+                new ExportToDataGridViewOptions() { ColumnHeaders = true });
+        }
+        
+
+        private void SaveExcelFromDataGridView(string excelFile) {
+            ExcelFile ef = new ExcelFile();
+            ExcelWorksheet ws = ef.Worksheets.Add("DGW Sheet");
+
+            // From DataGridView to ExcelFile.
+            DataGridViewConverter.ImportFromDataGridView(
+                ws,
+                this.dataGridView1,
+                new ImportFromDataGridViewOptions() { ColumnHeaders = true });
+
+            ef.Save(excelFile);
+        }
+        private void excelSaveButton_Click(object sender, EventArgs e) {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XLS files (*.xls)|*.xls|XLT files (*.xlt)|*.xlt|XLSX files (*.xlsx)|*.xlsx|XLSM files (*.xlsm)|*.xlsm|XLTX (*.xltx)|*.xltx|XLTM (*.xltm)|*.xltm|ODS (*.ods)|*.ods|OTS (*.ots)|*.ots|CSV (*.csv)|*.csv|TSV (*.tsv)|*.tsv|HTML (*.html)|*.html|MHTML (.mhtml)|*.mhtml|PDF (*.pdf)|*.pdf|XPS (*.xps)|*.xps|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg)|*.jpg|PNG (*.png)|*.png|TIFF (*.tif)|*.tif|WMP (*.wdp)|*.wdp";
+            saveFileDialog.FilterIndex = 3;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                this.SaveExcelFromDataGridView(saveFileDialog.FileName);
+        }
+
+        private void excelLoadButton_Click(object sender, EventArgs e) {
+
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XLS files (*.xls, *.xlt)|*.xls;*.xlt|XLSX files (*.xlsx, *.xlsm, *.xltx, *.xltm)|*.xlsx;*.xlsm;*.xltx;*.xltm|ODS files (*.ods, *.ots)|*.ods;*.ots|CSV files (*.csv, *.tsv)|*.csv;*.tsv|HTML files (*.html, *.htm)|*.html;*.htm";
+            openFileDialog.FilterIndex = 2;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                this.LoadExcelToDataGridView(openFileDialog.FileName);
         }
 
         private void test() {

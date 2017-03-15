@@ -18,3 +18,7 @@ D:\Develop\Project\dormitory\Dormitory\obj\Debug\Dormitory.Properties.Resources.
 D:\Develop\Project\dormitory\Dormitory\obj\Debug\Dormitory.csproj.GenerateResource.Cache
 D:\Develop\Project\dormitory\Dormitory\obj\Debug\Dormitory.exe
 D:\Develop\Project\dormitory\Dormitory\obj\Debug\Dormitory.pdb
+D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.dll
+D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.WinFormsUtilities.dll
+D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.xml
+D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.WinFormsUtilities.xml
