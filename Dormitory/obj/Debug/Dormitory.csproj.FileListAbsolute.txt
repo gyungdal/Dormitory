@@ -20,3 +20,5 @@ D:\Develop\Project\dormitory\Dormitory\obj\Debug\Dormitory.exe
 D:\Develop\Project\dormitory\Dormitory\obj\Debug\Dormitory.pdb
 D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.xml
 D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.WinFormsUtilities.xml
+D:\Develop\Project\dormitory\Dormitory\bin\Debug\Newtonsoft.Json.dll
+D:\Develop\Project\dormitory\Dormitory\bin\Debug\Newtonsoft.Json.xml

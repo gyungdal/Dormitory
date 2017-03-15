@@ -9,14 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.WinFormsUtilities;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace Dormitory
 {
     public partial class Main : Form
     {
+        private JObject student; 
         string permissionPrev = "";
-        private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR};
+        private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
 
         private void button1_Click(object sender, EventArgs e) {
@@ -37,7 +39,19 @@ namespace Dormitory
             }
             return null;
         }
-        
+
+
+        private void Main_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void TabControl1_TabIndexChanged(object sender, System.EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
         private permission getPermissionSeleted(string text) {
             switch (text) {
                 case "최고 관리자":
@@ -55,20 +69,20 @@ namespace Dormitory
             if (this.permissionPrev.Length != 0) {
                 List<KeyValuePair<string, bool>> prevItems = getListBoxResource(getPermissionSeleted(permissionPrev));
                 prevItems.Clear();
-                for(int i = 0;i<this.checkedListBox1.Items.Count;i++) {
+                for (int i = 0; i < this.checkedListBox1.Items.Count; i++) {
                     prevItems.Add(new KeyValuePair<string, bool>(this.checkedListBox1.Items[i].ToString(), this.checkedListBox1.GetItemChecked(i)));
                 }
             }
             this.checkedListBox1.Items.Clear();
             List<KeyValuePair<string, bool>> items = getListBoxResource(getPermissionSeleted(this.comboBox1.Text));
-            if(items != null) {
-                foreach(KeyValuePair<string ,bool> item in items) {
+            if (items != null) {
+                foreach (KeyValuePair<string, bool> item in items) {
                     this.checkedListBox1.Items.Add(item.Key, item.Value);
                 }
-            } 
+            }
             this.permissionPrev = this.comboBox1.Text;
         }
-        public Main(){
+        public Main() {
             InitializeComponent();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             isSuperAdmin();
@@ -83,10 +97,44 @@ namespace Dormitory
                 ws,
                 this.dataGridView1,
                 new ExportToDataGridViewOptions() { ColumnHeaders = true });
+            gridParser(this.dataGridView1);
         }
-        
+
+        private JObject getStringFromJSON(string url, List<KeyValuePair<string, string>> param)
+        {
+            using (WebClient client = new WebClient())
+            {
+                var reqparm = new System.Collections.Specialized.NameValueCollection();
+                foreach (var item in param) {
+                    reqparm.Add(item.Key, item.Value);
+                }
+                byte[] responsebytes = client.UploadValues("???", "POST", reqparm);
+                string responsebody = Encoding.UTF8.GetString(responsebytes);
+                return JObject.Parse(responsebody);
+            }
+        }
+
+        private void gridParser(DataGridView grid)
+        {
+            JObject result = new JObject();
+
+            for (int i = 0;i < grid.Rows.Count; i++)
+            {
+                JObject jarray = new JObject();
+                for (int j = 0; j < grid.Rows[i].Cells.Count; j++)
+                {
+                   if (this.dataGridView1.Rows[i].Cells[j].Value != null) {
+                        jarray.Add(j.ToString(), this.dataGridView1.Rows[i].Cells[j].Value.ToString());
+                   }
+                }
+                result.Add(i.ToString(), jarray);
+            }
+            student = result;
+//            MessageBox.Show(result.ToString());
+        }
 
         private void SaveExcelFromDataGridView(string excelFile) {
+            
             ExcelFile ef = new ExcelFile();
             ExcelWorksheet ws = ef.Worksheets.Add("DGW Sheet");
 
@@ -102,9 +150,9 @@ namespace Dormitory
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "XLS files (*.xls)|*.xls|XLT files (*.xlt)|*.xlt|XLSX files (*.xlsx)|*.xlsx|XLSM files (*.xlsm)|*.xlsm|XLTX (*.xltx)|*.xltx|XLTM (*.xltm)|*.xltm|ODS (*.ods)|*.ods|OTS (*.ots)|*.ots|CSV (*.csv)|*.csv|TSV (*.tsv)|*.tsv|HTML (*.html)|*.html|MHTML (.mhtml)|*.mhtml|PDF (*.pdf)|*.pdf|XPS (*.xps)|*.xps|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg)|*.jpg|PNG (*.png)|*.png|TIFF (*.tif)|*.tif|WMP (*.wdp)|*.wdp";
             saveFileDialog.FilterIndex = 3;
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                this.SaveExcelFromDataGridView(saveFileDialog.FileName);
+            gridParser(this.dataGridView1);
+            //if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                //this.SaveExcelFromDataGridView(saveFileDialog.FileName);
         }
 
         private void excelLoadButton_Click(object sender, EventArgs e) {
@@ -115,6 +163,10 @@ namespace Dormitory
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 this.LoadExcelToDataGridView(openFileDialog.FileName);
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, System.Windows.Forms.DataGridViewCellEventArgs e){
+
         }
 
         private void test() {
