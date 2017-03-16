@@ -17,7 +17,7 @@ namespace Dormitory
     public partial class Main : Form
     {
         private bool isAdmin;
-        private int prevTab = -1;
+        private int prevTab = 0;
         private JObject student, score, permissionJson; 
         string permissionPrev = "";
         private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
@@ -45,7 +45,7 @@ namespace Dormitory
 
         private void Main_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            MessageBox.Show("CLOSE");
         }
 
         private JObject permissionToJson()
@@ -76,6 +76,7 @@ namespace Dormitory
                 {
                     case 0:
                         student = gridParser(this.dataGridView1);
+                        MessageBox.Show(student.ToString());
                         break;
                     case 1:
                         //
