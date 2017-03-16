@@ -108,5 +108,8 @@ namespace Dormitory
                 this.Close();
             }
         }
+        private void Login_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e) {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+        }
     }
 }

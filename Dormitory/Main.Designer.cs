@@ -35,14 +35,14 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.searchText = new System.Windows.Forms.TextBox();
+            this.searchType = new System.Windows.Forms.ComboBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.searchType = new System.Windows.Forms.ComboBox();
-            this.searchText = new System.Windows.Forms.TextBox();
-            this.searchButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -131,6 +131,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "검색";
             // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(7, 406);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(187, 23);
+            this.searchButton.TabIndex = 3;
+            this.searchButton.Text = "검색";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // searchText
+            // 
+            this.searchText.Location = new System.Drawing.Point(7, 54);
+            this.searchText.Name = "searchText";
+            this.searchText.Size = new System.Drawing.Size(187, 25);
+            this.searchText.TabIndex = 2;
+            // 
+            // searchType
+            // 
+            this.searchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.searchType.FormattingEnabled = true;
+            this.searchType.Location = new System.Drawing.Point(6, 24);
+            this.searchType.Name = "searchType";
+            this.searchType.Size = new System.Drawing.Size(188, 23);
+            this.searchType.TabIndex = 1;
+            // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -164,6 +190,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(4, 4);
             this.comboBox1.Name = "comboBox1";
@@ -179,37 +206,13 @@
             this.checkedListBox1.Size = new System.Drawing.Size(903, 384);
             this.checkedListBox1.TabIndex = 0;
             // 
-            // searchType
-            // 
-            this.searchType.FormattingEnabled = true;
-            this.searchType.Location = new System.Drawing.Point(6, 24);
-            this.searchType.Name = "searchType";
-            this.searchType.Size = new System.Drawing.Size(188, 23);
-            this.searchType.TabIndex = 1;
-            // 
-            // searchText
-            // 
-            this.searchText.Location = new System.Drawing.Point(7, 54);
-            this.searchText.Name = "searchText";
-            this.searchText.Size = new System.Drawing.Size(187, 25);
-            this.searchText.TabIndex = 2;
-            // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(7, 406);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(187, 23);
-            this.searchButton.TabIndex = 3;
-            this.searchButton.Text = "검색";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 474);
             this.Controls.Add(this.tabControl1);
+            this.KeyPreview = true;
             this.Name = "Main";
             this.Text = "Form2";
             this.tabControl1.ResumeLayout(false);
@@ -222,10 +225,6 @@
             this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
-            this.tabControl1.Selected += TabControl1_Selected;
-            this.FormClosed += Main_FormClosed;
-            this.KeyPreview = true;
-            this.KeyDown += Main_KeyDown;
         }
 
 
