@@ -13,16 +13,24 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Dormitory
 {
     public partial class Main : Form
     {
+        private const string pointGetURL = "http://192.168.1.101:3141/point/get";
+        private const string pointSetURL = "http://192.168.1.101:3141/point/set";
+        private const string permissionGetURL = "http://192.168.1.101:3141/permission/get";
+        private const string permissionSetURL = "http://192.168.1.101:3141/permission/set";
+        private string userId;
         private bool isAdmin;
+        private permission userPermission;
         private int prevTab = 0;
-        private JObject student, score, permissionJson; 
+        private JArray student, score;
+        private JObject permissionJson; 
         string permissionPrev = "";
-        private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
+        public enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
 
         private void button1_Click(object sender, EventArgs e) {
@@ -50,26 +58,7 @@ namespace Dormitory
             MessageBox.Show("CLOSE");
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
-
-        private JObject permissionToJson()
-        {
-            JObject result = new JObject();
-            JObject info = new JObject();
-            foreach(KeyValuePair<string, bool> item in admin)
-                info.Add(item.Key, item.Value);
-            result.Add("admin", info);
-            info = new JObject();
-            foreach (KeyValuePair<string, bool> item in dormitoryTeacher)
-                info.Add(item.Key, item.Value);
-            result.Add("dormitoryTeacher", info);
-            info = new JObject();
-
-            foreach (KeyValuePair<string, bool> item in teacher)
-                info.Add(item.Key, item.Value);
-            result.Add("teacher", info);
-            MessageBox.Show(result.ToString());
-            return result;
-        }
+        
 
         private void Main_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
             if(e.KeyData == (Keys.Control | Keys.S)) {
@@ -79,8 +68,11 @@ namespace Dormitory
             } 
         }
 
-        private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e)
-        {
+        private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e) {
+            if (e.TabPageIndex == 1) {
+                string data = new WebClient().DownloadString(pointGetURL);
+                dataGridView2.DataSource = JsonConvert.DeserializeObject<List<PointItem>>(data);
+            }
             if (prevTab != -1 || prevTab != e.TabPageIndex)
             {
                 switch (prevTab)
@@ -90,7 +82,8 @@ namespace Dormitory
                         MessageBox.Show(student.ToString());
                         break;
                     case 1:
-                        //
+                        score = gridParser(this.dataGridView2);
+                        MessageBox.Show(score.ToString());
                         break;
                     case 2:
                         if (this.permissionPrev.Length != 0)
@@ -102,7 +95,7 @@ namespace Dormitory
                                 prevItems.Add(new KeyValuePair<string, bool>(this.checkedListBox1.Items[i].ToString(), this.checkedListBox1.GetItemChecked(i)));
                             }
                         }
-                        permissionToJson();
+                        setPermissionData();
                         break;
                     default:
                         break;
@@ -141,12 +134,16 @@ namespace Dormitory
             }
             this.permissionPrev = this.comboBox1.Text;
         }
-        public Main(string type) {
-            MessageBox.Show(type);
+        public Main(string id, permission type) {
+            this.userId = id;
+            this.userPermission = type;
+            //MessageBox.Show(type.ToString());
             InitializeComponent();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             isSuperAdmin();
-
+            this.searchType.Items.Add("학번");
+            this.searchType.Items.Add("이름");
+            this.searchType.SelectedIndex = 1;
         }
 
         private void LoadExcelToDataGridView(string excelFile) {
@@ -161,7 +158,7 @@ namespace Dormitory
             gridParser(this.dataGridView1);
         }
 
-        private JObject getStringFromJSON(string url, JObject json) {
+        private JObject getJson(string url, object json) {
             try {
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
@@ -172,7 +169,7 @@ namespace Dormitory
                     using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse()) {
                         using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream())) {
                             string result = streamReader.ReadToEnd();
-                            MessageBox.Show(result);
+                            return JObject.Parse(result);
                         }
                     }
                 }
@@ -182,9 +179,27 @@ namespace Dormitory
             return JObject.Parse("{}");
         }
 
-        private JObject gridParser(DataGridView grid)
+        private void postJson(string url, object json) {
+            try {
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                byte[] postBody = Encoding.ASCII.GetBytes(json.ToString());
+                using (Stream stream = httpWebRequest.GetRequestStream()) {
+                    stream.Write(postBody, 0, postBody.Length);
+                    using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse()) {
+                        if (httpResponse.StatusCode == HttpStatusCode.OK)
+                            return;
+                    }
+                }
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            }
+        }
+
+        private JArray gridParser(DataGridView grid)
         {
-            JObject result = new JObject();
+            JArray result = new JArray();
 
             for (int i = 0;i < grid.Rows.Count; i++)
             {
@@ -195,7 +210,7 @@ namespace Dormitory
                         jarray.Add(j.ToString(), this.dataGridView1.Rows[i].Cells[j].Value.ToString());
                    }
                 }
-                result.Add(i.ToString(), jarray);
+                result.Add(jarray);
             }
             
             return result;
@@ -232,17 +247,52 @@ namespace Dormitory
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 this.LoadExcelToDataGridView(openFileDialog.FileName);
         }
-  
-        private void test() {
+
+        private void searchButton_Click(object sender, EventArgs e) {
+            string type = this.searchType.Text;
+            string searchText = this.searchText.Text;
+            MessageBox.Show("type : " + type + ", Search Text : " + searchText);
+        }
+
+        private void getPermissionData() {
+            string permissionData = new WebClient().DownloadString(permissionGetURL);
+            JArray permissionJson = JArray.Parse(permissionData);
+
             this.admin.Clear();
-            this.admin.Add(new KeyValuePair<string, bool>("YO", false));
-            this.admin.Add(new KeyValuePair<string, bool>("HOME", false));
-            this.admin.Add(new KeyValuePair<string, bool>(".?", false));
+            this.admin.Add(new KeyValuePair<string, bool>("상/벌점 관리", Int16.Parse(permissionJson[0]["m_point"].ToString()) == 1));
+            this.admin.Add(new KeyValuePair<string, bool>("학생 관리", Int16.Parse(permissionJson[0]["m_student"].ToString()) == 1));
+            this.dormitoryTeacher.Clear();
+            this.dormitoryTeacher.Add(new KeyValuePair<string, bool>("상/벌점 관리", Int16.Parse(permissionJson[1]["m_point"].ToString()) == 1));
+            this.dormitoryTeacher.Add(new KeyValuePair<string, bool>("학생 관리", Int16.Parse(permissionJson[1]["m_student"].ToString()) == 1));
+            this.teacher.Clear();
+            this.teacher.Add(new KeyValuePair<string, bool>("상/벌점 관리", Int16.Parse(permissionJson[2]["m_point"].ToString()) == 1));
+            this.teacher.Add(new KeyValuePair<string, bool>("학생 관리", Int16.Parse(permissionJson[2]["m_student"].ToString()) == 1));
         }
         
+        private void setPermissionData() {
+            JArray data = new JArray();
+            JObject json = new JObject();
+            json.Add("code", 0);
+            json.Add("m_point", this.admin[0].Value);
+            json.Add("m_student", this.admin[1].Value);
+            data.Add(json);
+            json = new JObject();
+            json.Add("code", 1);
+            json.Add("m_point", this.dormitoryTeacher[0].Value);
+            json.Add("m_student", this.dormitoryTeacher[1].Value);
+            data.Add(json);
+            json = new JObject();
+            json.Add("code", 2);
+            json.Add("m_point", this.teacher[0].Value);
+            json.Add("m_student", this.teacher[1].Value);
+            data.Add(json);
+            postJson(permissionSetURL, data);
+            MessageBox.Show("data : " + data.ToString());
+        }
+
         private void isSuperAdmin() {
             //최고 관리자인지 확인하는 부분
-            isAdmin = true;
+            isAdmin = (userPermission == permission.ADMIN);
             this.comboBox1.Items.Clear();
             if (!isAdmin) {
                 this.tabControl1.TabPages.RemoveAt(2);
@@ -254,7 +304,7 @@ namespace Dormitory
                 this.tabPage3.Enter += (s, e) => {
                     this.comboBox1.Items.Clear();
                     this.comboBox1.Items.AddRange(new string[] { "최고 관리자", "사감 선생님", "일반 교사" });
-                    test();
+                    getPermissionData();
                     this.comboBox1.SelectedIndex = 0;
                     this.button1.Text = "저장";
                 };

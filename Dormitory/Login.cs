@@ -17,6 +17,7 @@ namespace Dormitory
 {
     public partial class Login : Form
     {
+        private const string loginURL = "http://192.168.1.101:3141/login";
         private Main viewer = null;
         private bool isOnline {
             get {
@@ -58,9 +59,11 @@ namespace Dormitory
                 using (Stream stream = httpWebRequest.GetRequestStream()) {
                     stream.Write(postBody, 0, postBody.Length);
                     using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse()) {
+                        if (httpResponse.StatusCode != HttpStatusCode.OK)
+                            return JObject.Parse("{\"status\":false}");
                         using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream())) {
                             string result = streamReader.ReadToEnd();
-                            MessageBox.Show(result);
+                            return JObject.Parse(result);
                         }
                     }
                 }
@@ -77,16 +80,31 @@ namespace Dormitory
             JObject json = new JObject();
             json.Add("id", id);
             json.Add("password", pw);
-            
-            MessageBox.Show(getStringFromJSON("http://192.168.137.102:3141/login", json).ToString());
-            bool status = true;
-            // status = tryLogin(idText.Text, pwText.Text);
-            string type = "teacher";
-            if (status)
+            JObject info = getStringFromJSON(loginURL, json);
+
+            //MessageBox.Show(getStringFromJSON("http://192.168.137.102:3141/login", json).ToString());
+
+            bool status = Boolean.Parse(info["status"].ToString());
+            Main.permission getPermission(int tt)
             {
+                switch (tt) {
+                    case 0:
+                        return Main.permission.ADMIN;
+                    case 1:
+                        return Main.permission.DORMITORY_TEACHER;
+                    case 2:
+                        return Main.permission.NORMAL_TEACHER;
+                    default:
+                        return Main.permission.ERROR;
+                }
+            }
+            if (status) {
+                Main.permission type = getPermission(Int32.Parse(info["permission"].ToString()));
+                //MessageBox.Show("status : " + status + ", type : " + type);
+            
                 Thread viewerThread = new Thread(delegate ()
                 {
-                    viewer = new Dormitory.Main(type);
+                    viewer = new Dormitory.Main(id, type);
                     viewer.Show();
                     System.Windows.Threading.Dispatcher.Run();
                 });
