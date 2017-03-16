@@ -222,6 +222,7 @@ namespace Dormitory
         }
   
         private void test() {
+            this.admin.Clear();
             this.admin.Add(new KeyValuePair<string, bool>("YO", false));
             this.admin.Add(new KeyValuePair<string, bool>("HOME", false));
             this.admin.Add(new KeyValuePair<string, bool>(".?", false));
@@ -230,15 +231,16 @@ namespace Dormitory
         private void isSuperAdmin() {
             //최고 관리자인지 확인하는 부분
             isAdmin = true;
+            this.comboBox1.Items.Clear();
             if (!isAdmin) {
                 this.tabControl1.TabPages.RemoveAt(2);
                 this.admin = this.teacher = this.dormitoryTeacher = null;
-                this.comboBox1.Items.Clear();
             } else {
                 this.admin = new List<KeyValuePair<string, bool>>();
                 this.teacher = new List<KeyValuePair<string, bool>>();
                 this.dormitoryTeacher = new List<KeyValuePair<string, bool>>();
                 this.tabPage3.Enter += (s, e) => {
+                    this.comboBox1.Items.Clear();
                     this.comboBox1.Items.AddRange(new string[] { "최고 관리자", "사감 선생님", "일반 교사" });
                     test();
                     this.comboBox1.SelectedIndex = 0;
