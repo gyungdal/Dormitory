@@ -162,8 +162,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.FormClosed += Main_FormClosed;
-            this.tabControl1.Selected += TabControl1_Selected;
-            this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
+            this.tabControl1.Selected += TabControl1_Selected; 
         }
 
 

@@ -18,7 +18,7 @@ namespace Dormitory
     {
         private bool isAdmin;
         private int prevTab = -1;
-        private JObject student, score; 
+        private JObject student, score, permissionJson; 
         string permissionPrev = "";
         private enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
@@ -48,19 +48,55 @@ namespace Dormitory
             throw new System.NotImplementedException();
         }
 
+        private JObject permissionToJson()
+        {
+            JObject result = new JObject();
+            JObject info = new JObject();
+            foreach(KeyValuePair<string, bool> item in admin)
+                info.Add(item.Key, item.Value);
+            result.Add("admin", info);
+            info = new JObject();
+            foreach (KeyValuePair<string, bool> item in dormitoryTeacher)
+                info.Add(item.Key, item.Value);
+            result.Add("dormitoryTeacher", info);
+            info = new JObject();
+
+            foreach (KeyValuePair<string, bool> item in teacher)
+                info.Add(item.Key, item.Value);
+            result.Add("teacher", info);
+            MessageBox.Show(result.ToString());
+            return result;
+        }
+
         private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e)
         {
             if (prevTab != -1 || prevTab != e.TabPageIndex)
             {
-                prevTab = e.TabPageIndex;
                 switch (prevTab)
                 {
                     case 0:
                         student = gridParser(this.dataGridView1);
                         break;
-
+                    case 1:
+                        //
+                        break;
+                    case 2:
+                        if (this.permissionPrev.Length != 0)
+                        {
+                            List<KeyValuePair<string, bool>> prevItems = getListBoxResource(getPermissionSeleted(permissionPrev));
+                            prevItems.Clear();
+                            for (int i = 0; i < this.checkedListBox1.Items.Count; i++)
+                            {
+                                prevItems.Add(new KeyValuePair<string, bool>(this.checkedListBox1.Items[i].ToString(), this.checkedListBox1.GetItemChecked(i)));
+                            }
+                        }
+                        permissionToJson();
+                        break;
+                    default:
+                        break;
                 }
             }
+            prevTab = e.TabPageIndex;
         }
 
         private permission getPermissionSeleted(string text) {
@@ -176,13 +212,7 @@ namespace Dormitory
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 this.LoadExcelToDataGridView(openFileDialog.FileName);
         }
-        
-        private async void DataGridView1_CellValueChanged(object sender, System.Windows.Forms.DataGridViewCellEventArgs e){
-            //if (this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()] == null)
-            //    gridParser(this.dataGridView1);
-            //MessageBox.Show(this.student[e.RowIndex.ToString()][e.ColumnIndex.ToString()].ToString());
-        }
-
+  
         private void test() {
             this.admin.Add(new KeyValuePair<string, bool>("YO", false));
             this.admin.Add(new KeyValuePair<string, bool>("HOME", false));
@@ -195,6 +225,7 @@ namespace Dormitory
             if (!isAdmin) {
                 this.tabControl1.TabPages.RemoveAt(2);
                 this.admin = this.teacher = this.dormitoryTeacher = null;
+                this.comboBox1.Items.Clear();
             } else {
                 this.admin = new List<KeyValuePair<string, bool>>();
                 this.teacher = new List<KeyValuePair<string, bool>>();
