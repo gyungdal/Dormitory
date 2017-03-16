@@ -46,6 +46,8 @@ namespace Dormitory
         private void Main_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
             MessageBox.Show("CLOSE");
+
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
 
         private JObject permissionToJson()
