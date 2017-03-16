@@ -42,7 +42,6 @@ namespace Dormitory
             return null;
         }
 
-
         private void Main_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
             MessageBox.Show("CLOSE");
