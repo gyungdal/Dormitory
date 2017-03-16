@@ -11,6 +11,7 @@ using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.WinFormsUtilities;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.IO;
 
 namespace Dormitory
 {
@@ -129,7 +130,8 @@ namespace Dormitory
             }
             this.permissionPrev = this.comboBox1.Text;
         }
-        public Main() {
+        public Main(string type) {
+            MessageBox.Show(type);
             InitializeComponent();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             isSuperAdmin();
@@ -147,18 +149,24 @@ namespace Dormitory
             gridParser(this.dataGridView1);
         }
 
-        private JObject getStringFromJSON(string url, List<KeyValuePair<string, string>> param)
-        {
-            using (WebClient client = new WebClient())
-            {
-                var reqparm = new System.Collections.Specialized.NameValueCollection();
-                foreach (var item in param) {
-                    reqparm.Add(item.Key, item.Value);
+        private JObject getStringFromJSON(string url, JObject json) {
+            try {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                httpWebRequest.Method = "POST";
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream())) {
+                    streamWriter.Write(json);
+                    streamWriter.Flush();
                 }
-                byte[] responsebytes = client.UploadValues("???", "POST", reqparm);
-                string responsebody = Encoding.UTF8.GetString(responsebytes);
-                return JObject.Parse(responsebody);
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) {
+                    var responseText = streamReader.ReadToEnd();
+                    return JObject.Parse(responseText);
+                }
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
             }
+            return null;
         }
 
         private JObject gridParser(DataGridView grid)

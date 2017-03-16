@@ -1,0 +1,4 @@
+D:\Develop\Project\dormitory\Dormitory\obj\Release\Dormitory.Login.resources
+D:\Develop\Project\dormitory\Dormitory\obj\Release\Dormitory.Main.resources
+D:\Develop\Project\dormitory\Dormitory\obj\Release\Dormitory.Properties.Resources.resources
+D:\Develop\Project\dormitory\Dormitory\obj\Release\Dormitory.csproj.GenerateResource.Cache

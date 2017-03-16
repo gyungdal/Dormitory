@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.IO;
 
 namespace Dormitory
 {
@@ -23,37 +24,50 @@ namespace Dormitory
             InitializeComponent();
         }
 
-        private static string Hash(string input)
+        private static string sha1Encrypt(string input)
         {
             var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
             return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
         }
 
-        private JObject getStringFromJSON(string url, List<KeyValuePair<string, string>> param)
+        private JObject getStringFromJSON(string url, JObject json)
         {
-            using (WebClient client = new WebClient())
-            {
-                var reqparm = new System.Collections.Specialized.NameValueCollection();
-                foreach (var item in param)
-                {
-                    reqparm.Add(item.Key, item.Value);
+            try{
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                httpWebRequest.Method = "POST";
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream())) {
+                    streamWriter.Write(json);
+                    streamWriter.Flush();
                 }
-                byte[] responsebytes = client.UploadValues("???", "POST", reqparm);
-                string responsebody = Encoding.UTF8.GetString(responsebytes);
-                return JObject.Parse(responsebody);
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) {
+                    var responseText = streamReader.ReadToEnd();
+                    return JObject.Parse(responseText);
+                }
+            } catch(Exception e) {
+                MessageBox.Show(e.ToString());
             }
+            return null;
         }
             
         private void loginBtn_Click(object sender, EventArgs e)
         {
+            string id = this.idText.Text;
+            string pw = sha1Encrypt(this.pwText.Text);
+            JObject json = new JObject();
+            json.Add("id", id);
+            json.Add("password", pw);
+            
+            MessageBox.Show(getStringFromJSON("https://httpbin.org/post", json).ToString());
             bool status = true;
             // status = tryLogin(idText.Text, pwText.Text);
-
+            string type = "teacher";
             if (status)
             {
                 Thread viewerThread = new Thread(delegate ()
                 {
-                    viewer = new Dormitory.Main();
+                    viewer = new Dormitory.Main(type);
                     viewer.Show();
                     System.Windows.Threading.Dispatcher.Run();
                 });
