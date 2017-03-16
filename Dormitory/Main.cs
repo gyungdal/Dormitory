@@ -12,6 +12,7 @@ using GemBox.Spreadsheet.WinFormsUtilities;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
+using System.Net.Http;
 
 namespace Dormitory
 {
@@ -28,6 +29,8 @@ namespace Dormitory
             string userType = this.comboBox1.Text;
             MessageBox.Show(userType);
         }
+
+        
         private List<KeyValuePair<string, bool>> getListBoxResource(permission p) {
             switch (p) {
                 case permission.ADMIN:
@@ -43,10 +46,8 @@ namespace Dormitory
             return null;
         }
 
-        private void Main_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
-        {
+        private void Main_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e){
             MessageBox.Show("CLOSE");
-
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
 
@@ -68,6 +69,14 @@ namespace Dormitory
             result.Add("teacher", info);
             MessageBox.Show(result.ToString());
             return result;
+        }
+
+        private void Main_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
+            if(e.KeyData == (Keys.Control | Keys.S)) {
+                //save!
+                MessageBox.Show("SAVE!");
+                
+            } 
         }
 
         private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e)
@@ -137,6 +146,7 @@ namespace Dormitory
             InitializeComponent();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             isSuperAdmin();
+
         }
 
         private void LoadExcelToDataGridView(string excelFile) {
@@ -153,22 +163,23 @@ namespace Dormitory
 
         private JObject getStringFromJSON(string url, JObject json) {
             try {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream())) {
-                    streamWriter.Write(json);
-                    streamWriter.Flush();
-                }
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) {
-                    var responseText = streamReader.ReadToEnd();
-                    return JObject.Parse(responseText);
+                byte[] postBody = Encoding.ASCII.GetBytes(json.ToString());
+                using (Stream stream = httpWebRequest.GetRequestStream()) {
+                    stream.Write(postBody, 0, postBody.Length);
+                    using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse()) {
+                        using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream())) {
+                            string result = streamReader.ReadToEnd();
+                            MessageBox.Show(result);
+                        }
+                    }
                 }
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
-            return null;
+            return JObject.Parse("{}");
         }
 
         private JObject gridParser(DataGridView grid)
@@ -201,8 +212,7 @@ namespace Dormitory
                 ws,
                 this.dataGridView1,
                 new ImportFromDataGridViewOptions() { ColumnHeaders = true });
-
-            ef.Save(excelFile);
+                        ef.Save(excelFile);
         }
         private void excelSaveButton_Click(object sender, EventArgs e) {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -268,8 +278,10 @@ namespace Dormitory
          *      최고 관리자만 사용 및 접근 가능한 폼(버튼)을 추가해서 대상별 권한 설정 가능하게 부여할 수 있도록 함
          * 
          *      미안하다 경식아 치킨 살게
-         * 
+         *      
          * */
+
+        //yuki no youni
 
     }
 }

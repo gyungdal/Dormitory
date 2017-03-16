@@ -18,7 +18,8 @@ namespace Dormitory
     public partial class Login : Form
     {
         private Main viewer = null;
-        private bool isOnline { get {
+        private bool isOnline {
+            get {
                 try {
                     using (var client = new WebClient()) {
                         using (var stream = client.OpenRead("http://www.google.com")) {
@@ -50,22 +51,23 @@ namespace Dormitory
         private JObject getStringFromJSON(string url, JObject json)
         {
             try{
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream())) {
-                    streamWriter.Write(json);
-                    streamWriter.Flush();
-                }
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) {
-                    var responseText = streamReader.ReadToEnd();
-                    return JObject.Parse(responseText);
+                byte[] postBody = Encoding.ASCII.GetBytes(json.ToString());
+                using (Stream stream = httpWebRequest.GetRequestStream()) {
+                    stream.Write(postBody, 0, postBody.Length);
+                    using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse()) {
+                        using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream())) {
+                            string result = streamReader.ReadToEnd();
+                            MessageBox.Show(result);
+                        }
+                    }
                 }
             } catch(Exception e) {
                 MessageBox.Show(e.ToString());
             }
-            return null;
+            return JObject.Parse("{}");
         }
             
         private void loginBtn_Click(object sender, EventArgs e)
@@ -76,7 +78,7 @@ namespace Dormitory
             json.Add("id", id);
             json.Add("password", pw);
             
-            MessageBox.Show(getStringFromJSON("https://httpbin.org/post", json).ToString());
+            MessageBox.Show(getStringFromJSON("http://192.168.137.102:3141/login", json).ToString());
             bool status = true;
             // status = tryLogin(idText.Text, pwText.Text);
             string type = "teacher";

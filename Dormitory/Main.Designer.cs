@@ -162,9 +162,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.FormClosed += Main_FormClosed;
-            this.tabControl1.Selected += TabControl1_Selected; 
+            this.tabControl1.Selected += TabControl1_Selected;
+            this.KeyDown += Main_KeyDown;
         }
 
+        
 
         #endregion
         private System.Windows.Forms.TabControl tabControl1;
