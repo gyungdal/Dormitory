@@ -28,7 +28,6 @@ namespace Dormitory
         private permission userPermission;
         private int prevTab = 0;
         private JArray student, score;
-        private JObject permissionJson; 
         string permissionPrev = "";
         public enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
@@ -54,20 +53,18 @@ namespace Dormitory
             return null;
         }
 
+        private void Main_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
+            if (e.Control && e.KeyCode == Keys.S) {
+                MessageBox.Show("Save!");
+                e.SuppressKeyPress = true; 
+            }
+        }
+
         private void Main_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e){
             MessageBox.Show("CLOSE");
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
         
-
-        private void Main_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
-            if(e.KeyData == (Keys.Control | Keys.S)) {
-                //save!
-                MessageBox.Show("SAVE!");
-                
-            } 
-        }
-
         private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e) {
             if (e.TabPageIndex == 1) {
                 string data = new WebClient().DownloadString(pointGetURL);

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
@@ -27,7 +23,7 @@ namespace Dormitory
                             return true;
                         }
                     }
-                } catch (Exception e) {
+                } catch (Exception) {
                     return false;
                 }
             }
@@ -43,8 +39,7 @@ namespace Dormitory
             }
         }
 
-        private static string sha1Encrypt(string input)
-        {
+        private static string sha1Encrypt(string input) {
             var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
             return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
         }
@@ -72,7 +67,8 @@ namespace Dormitory
             }
             return JObject.Parse("{}");
         }
-            
+        
+
         private void loginBtn_Click(object sender, EventArgs e)
         {
             string id = this.idText.Text;
@@ -100,8 +96,6 @@ namespace Dormitory
             }
             if (status) {
                 Main.permission type = getPermission(Int32.Parse(info["permission"].ToString()));
-                //MessageBox.Show("status : " + status + ", type : " + type);
-            
                 Thread viewerThread = new Thread(delegate ()
                 {
                     viewer = new Dormitory.Main(id, type);

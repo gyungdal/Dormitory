@@ -224,9 +224,10 @@
 
             this.tabControl1.Selected += TabControl1_Selected;
             this.FormClosed += Main_FormClosed;
+            this.KeyPreview = true;
+            this.KeyDown += Main_KeyDown;
         }
 
-        
 
         #endregion
         private System.Windows.Forms.TabControl tabControl1;
