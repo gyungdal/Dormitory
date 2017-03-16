@@ -18,10 +18,27 @@ namespace Dormitory
     public partial class Login : Form
     {
         private Main viewer = null;
+        private bool isOnline { get {
+                try {
+                    using (var client = new WebClient()) {
+                        using (var stream = client.OpenRead("http://www.google.com")) {
+                            return true;
+                        }
+                    }
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+        }
 
         public Login()
         {
             InitializeComponent();
+
+            if (!isOnline) {
+                MessageBox.Show("온라인 상태가 아닙니다");
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
         }
 
         private static string sha1Encrypt(string input)
@@ -29,7 +46,7 @@ namespace Dormitory
             var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
             return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
         }
-
+        
         private JObject getStringFromJSON(string url, JObject json)
         {
             try{
