@@ -64,6 +64,7 @@ namespace Dormitory
                 }
             } catch(Exception e) {
                 MessageBox.Show(e.ToString());
+                
             }
             return JObject.Parse("{}");
         }
@@ -77,7 +78,7 @@ namespace Dormitory
             json.Add("id", id);
             json.Add("password", pw);
             JObject info = getStringFromJSON(loginURL, json);
-
+            //JObject info = JObject.Parse("{\"status\":true, \"permission\":0}");
             //MessageBox.Show(getStringFromJSON("http://192.168.137.102:3141/login", json).ToString());
 
             bool status = Boolean.Parse(info["status"].ToString());
@@ -107,9 +108,6 @@ namespace Dormitory
                 viewerThread.Start();
                 this.Close();
             }
-        }
-        private void Login_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e) {
-            System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
     }
 }

@@ -70,8 +70,6 @@
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.FormClosed += Login_FormClosed;
-
         }
 
         

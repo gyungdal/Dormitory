@@ -268,20 +268,18 @@ namespace Dormitory
         
         private void setPermissionData() {
             JArray data = new JArray();
-            JObject json = new JObject();
-            json.Add("code", 0);
-            json.Add("m_point", this.admin[0].Value);
-            json.Add("m_student", this.admin[1].Value);
+            JArray json = new JArray();
+            json.Add(this.admin[0].Value ? 1 : 0);
+            json.Add(this.admin[1].Value ? 1 : 0);
+            json.Add(0);
             data.Add(json);
-            json = new JObject();
-            json.Add("code", 1);
-            json.Add("m_point", this.dormitoryTeacher[0].Value);
-            json.Add("m_student", this.dormitoryTeacher[1].Value);
+            json.Add(this.dormitoryTeacher[0].Value ? 1 : 0);
+            json.Add(this.dormitoryTeacher[1].Value ? 1 : 0);
+            json.Add(1);
             data.Add(json);
-            json = new JObject();
-            json.Add("code", 2);
-            json.Add("m_point", this.teacher[0].Value);
-            json.Add("m_student", this.teacher[1].Value);
+            json.Add(this.teacher[0].Value ? 1 : 0);
+            json.Add(this.teacher[1].Value ? 1 : 0);
+            json.Add(2);
             data.Add(json);
             postJson(permissionSetURL, data);
             MessageBox.Show("data : " + data.ToString());
