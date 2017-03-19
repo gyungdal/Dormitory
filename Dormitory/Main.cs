@@ -64,7 +64,16 @@ namespace Dormitory
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
         
-        
+        private JArray studentFilter(JArray ori) {
+            JArray result = new JArray();
+            foreach(JObject obj in ori) {
+                obj.Remove("plus");
+                obj.Remove("minus");
+                result.Add(obj);
+            }
+            return result;
+        }
+
         private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e) {
             switch(e.TabPageIndex) {
                 case 0:
@@ -72,7 +81,7 @@ namespace Dormitory
                         .GetResponse().GetResponseStream(), Encoding.UTF8, true).ReadToEnd().Trim();
                     MessageBox.Show(data);
                     //score = 
-                    jsonData = JsonConvert.DeserializeObject<JArray>(data);
+                    jsonData = studentFilter(JsonConvert.DeserializeObject<JArray>(data));
                     this.dataGridView1.DataSource = jsonData;
                     this.dataGridView1.AutoGenerateColumns = true;
                     this.dataGridView1.AllowUserToAddRows = false;
@@ -87,7 +96,7 @@ namespace Dormitory
                     jsonData = JsonConvert.DeserializeObject<JArray>(data);
                     this.dataGridView2.DataSource = jsonData;
                     this.dataGridView2.AutoGenerateColumns = true;
-                    this.dataGridView1.AllowUserToAddRows = false;
+                    this.dataGridView2.AllowUserToAddRows = false;
 
                     break;
                 case 2:
@@ -171,7 +180,7 @@ namespace Dormitory
                          .GetResponse().GetResponseStream(), Encoding.UTF8, true).ReadToEnd().Trim();
             MessageBox.Show(data);
             //score = 
-            jsonData = JsonConvert.DeserializeObject<JArray>(data);
+            jsonData = studentFilter(JsonConvert.DeserializeObject<JArray>(data));
             this.dataGridView1.DataSource = jsonData;
             this.dataGridView1.AutoGenerateColumns = true;
             this.dataGridView1.AllowUserToAddRows = false;
@@ -289,6 +298,13 @@ namespace Dormitory
             this.teacher.Add(new KeyValuePair<string, bool>("학생 관리", Int16.Parse(permissionJson[2]["m_student"].ToString()) == 1));
         }
         
+        private bool[] managerList() {
+            string permissionData = new WebClient().DownloadString(permissionGetURL);
+            JArray permissionJson = JArray.Parse(permissionData);
+            bool[] result = { Int16.Parse(permissionJson[userPermission == permission.DORMITORY_TEACHER ? 1 : 2]["m_point"].ToString()) == 1
+                    , Int16.Parse(permissionJson[userPermission == permission.DORMITORY_TEACHER ? 1 : 2]["m_student"].ToString()) == 1};
+            return result;
+    }
         private void setPermissionData() {
             JArray data = new JArray();
             JArray json = new JArray();
@@ -315,6 +331,12 @@ namespace Dormitory
             isAdmin = (userPermission == permission.ADMIN);
             this.comboBox1.Items.Clear();
             if (!isAdmin) {
+                bool[] tabAlive = managerList();
+                if (tabAlive[0])
+                    this.tabControl1.TabPages.RemoveAt(0);
+                if (tabAlive[1])
+                    this.tabControl1.TabPages.RemoveAt(1);
+
                 this.tabControl1.TabPages.RemoveAt(2);
                 this.admin = this.teacher = this.dormitoryTeacher = null;
             } else {
