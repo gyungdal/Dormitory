@@ -28,7 +28,7 @@ namespace Dormitory
         private bool isAdmin;
         private permission userPermission;
         private int prevTab = 0;
-        private JArray student, score;
+        private JArray student, score, backup;
         string permissionPrev = "";
         public enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
@@ -66,15 +66,15 @@ namespace Dormitory
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
         
+        
         private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e) {
             switch(e.TabPageIndex) {
                 case 1:
-                    string data = new WebClient().DownloadString(pointGetURL);
-                    var utf8 = Encoding.UTF8;
-                    byte[] utfBytes = utf8.GetBytes(data);
-                    data = utf8.GetString(utfBytes, 0, utfBytes.Length);
+                    string data = new StreamReader(((HttpWebRequest)WebRequest.Create(studentGetURL))
+                        .GetResponse().GetResponseStream(), Encoding.UTF8, true).ReadToEnd().Trim();
                     MessageBox.Show(data);
-                    this.dataGridView2.DataSource = JsonConvert.DeserializeObject<List<PointItem>>(data);
+                    backup = score = JsonConvert.DeserializeObject<JArray>(data);
+                    this.dataGridView2.DataSource = score;
                     this.dataGridView2.AutoGenerateColumns = true;
                     break;
                 case 2:
@@ -90,7 +90,7 @@ namespace Dormitory
                         MessageBox.Show(student.ToString());
                         break;
                     case 1:
-                        score = gridParser(this.dataGridView2);
+                        //score = gridParser(this.dataGridView2);
                         MessageBox.Show(score.ToString());
                         break;
                     case 2:
@@ -218,8 +218,8 @@ namespace Dormitory
                 JObject jarray = new JObject();
                 for (int j = 0; j < grid.Rows[i].Cells.Count; j++)
                 {
-                   if (this.dataGridView1.Rows[i].Cells[j].Value != null) {
-                        jarray.Add(j.ToString(), this.dataGridView1.Rows[i].Cells[j].Value.ToString());
+                   if (grid.Rows[i].Cells[j].Value != null) {
+                        jarray.Add(j.ToString(), grid.Rows[i].Cells[j].Value.ToString());
                    }
                 }
                 result.Add(jarray);
@@ -261,9 +261,27 @@ namespace Dormitory
         }
 
         private void searchButton_Click(object sender, EventArgs e) {
+            
             string type = this.searchType.Text;
-            string searchText = this.searchText.Text;
-            MessageBox.Show("type : " + type + ", Search Text : " + searchText);
+            JArray array = new JArray();
+            switch (type) {
+                case "이름":
+                    foreach(JObject obj in backup) {
+                        if (obj.GetValue("name").Value<string>().Contains(this.searchText.Text)) {
+                            array.Add(obj);
+                        }
+                    }
+                    break;
+                case "학번":
+                    foreach (JObject obj in backup) {
+                        if (obj.GetValue("school_num").Value<string>().Contains(this.searchText.Text)) {
+                            array.Add(obj);
+                        }
+                    }
+                    break;
+            }
+            score = array;
+            this.dataGridView2.DataSource = score;
         }
 
         private void getPermissionData() {
