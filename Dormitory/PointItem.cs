@@ -1,19 +1,11 @@
-﻿namespace Dormitory {
-    class PointItem {
-        string schoolNumber { get; set; }
-        string placeholder { get; set; }
-        string name { get; set; }
-        int point { get; set; }
-        string memo { get; set; }
+﻿using System.Collections.Generic;
 
-        bool isPlus { get {
-                return (point > 0);
-            }
-        }
-        bool isMinus {
-            get {
-                return (point > 0);
-            }
-        }
+namespace Dormitory {
+    class PointItem {
+        string school_num { get; set; }
+        string name { get; set; }
+        int plus { get; set; }
+        int minus { get; set; }
+        string phone_number { get; set; }
     }
 }

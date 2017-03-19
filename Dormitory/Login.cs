@@ -13,7 +13,7 @@ namespace Dormitory
 {
     public partial class Login : Form
     {
-        private const string loginURL = "http://192.168.1.101:3141/login";
+        private const string loginURL = "http://gyungdal.iptime.org:3141/login";
         private Main viewer = null;
         private bool isOnline {
             get {
@@ -35,7 +35,7 @@ namespace Dormitory
 
             if (!isOnline) {
                 MessageBox.Show("온라인 상태가 아닙니다");
-                System.Diagnostics.Process.GetCurrentProcess().Kill();
+                //System.Diagnostics.Process.GetCurrentProcess().Kill();
             }
         }
 
@@ -78,6 +78,7 @@ namespace Dormitory
             json.Add("id", id);
             json.Add("password", pw);
             JObject info = getStringFromJSON(loginURL, json);
+            MessageBox.Show(info.ToString());
             //JObject info = JObject.Parse("{\"status\":true, \"permission\":0}");
             //MessageBox.Show(getStringFromJSON("http://192.168.137.102:3141/login", json).ToString());
 

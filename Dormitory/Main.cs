@@ -17,12 +17,13 @@ using Newtonsoft.Json;
 
 namespace Dormitory
 {
-    public partial class Main : Form
-    {
-        private const string pointGetURL = "http://192.168.1.101:3141/point/get";
-        private const string pointSetURL = "http://192.168.1.101:3141/point/set";
-        private const string permissionGetURL = "http://192.168.1.101:3141/permission/get";
-        private const string permissionSetURL = "http://192.168.1.101:3141/permission/set";
+    public partial class Main : Form {
+        private const string studentGetURL = "http://gyungdal.iptime.org:3141/student/get";
+        private const string studentSetURL = "http://gyungdal.iptime.org:3141/student/set";
+        private const string pointGetURL = "http://gyungdal.iptime.org:3141/point/get";
+        private const string pointSetURL = "http://gyungdal.iptime.org:3141/point/set";
+        private const string permissionGetURL = "http://gyungdal.iptime.org:3141/permission/get";
+        private const string permissionSetURL = "http://gyungdal.iptime.org:3141/permission/set";
         private string userId;
         private bool isAdmin;
         private permission userPermission;
@@ -66,9 +67,19 @@ namespace Dormitory
         }
         
         private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e) {
-            if (e.TabPageIndex == 1) {
-                string data = new WebClient().DownloadString(pointGetURL);
-                dataGridView2.DataSource = JsonConvert.DeserializeObject<List<PointItem>>(data);
+            switch(e.TabPageIndex) {
+                case 1:
+                    string data = new WebClient().DownloadString(pointGetURL);
+                    var utf8 = Encoding.UTF8;
+                    byte[] utfBytes = utf8.GetBytes(data);
+                    data = utf8.GetString(utfBytes, 0, utfBytes.Length);
+                    MessageBox.Show(data);
+                    this.dataGridView2.DataSource = JsonConvert.DeserializeObject<List<PointItem>>(data);
+                    this.dataGridView2.AutoGenerateColumns = true;
+                    break;
+                case 2:
+                    getPermissionData();
+                    break;
             }
             if (prevTab != -1 || prevTab != e.TabPageIndex)
             {
@@ -141,6 +152,10 @@ namespace Dormitory
             this.searchType.Items.Add("학번");
             this.searchType.Items.Add("이름");
             this.searchType.SelectedIndex = 1;
+            this.tabControl1.Selected += TabControl1_Selected;
+            this.FormClosed += Main_FormClosed;
+            this.KeyDown += Main_KeyDown;
+           
         }
 
         private void LoadExcelToDataGridView(string excelFile) {
@@ -273,16 +288,18 @@ namespace Dormitory
             json.Add(this.admin[1].Value ? 1 : 0);
             json.Add(0);
             data.Add(json);
+            json = new JArray();
             json.Add(this.dormitoryTeacher[0].Value ? 1 : 0);
             json.Add(this.dormitoryTeacher[1].Value ? 1 : 0);
             json.Add(1);
             data.Add(json);
+            json = new JArray();
             json.Add(this.teacher[0].Value ? 1 : 0);
             json.Add(this.teacher[1].Value ? 1 : 0);
             json.Add(2);
             data.Add(json);
-            postJson(permissionSetURL, data);
             MessageBox.Show("data : " + data.ToString());
+            postJson(permissionSetURL, data);
         }
 
         private void isSuperAdmin() {
