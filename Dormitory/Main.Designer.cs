@@ -30,8 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.excelSaveButton = new System.Windows.Forms.Button();
-            this.excelLoadButton = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -43,6 +42,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.nameInput = new System.Windows.Forms.TextBox();
+            this.delButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.schoolNumInput = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -50,6 +55,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -67,8 +73,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.excelSaveButton);
-            this.tabPage1.Controls.Add(this.excelLoadButton);
+            this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
@@ -78,33 +83,23 @@
             this.tabPage1.Text = "학생 명부 관리";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // excelSaveButton
+            // AddButton
             // 
-            this.excelSaveButton.Location = new System.Drawing.Point(90, 6);
-            this.excelSaveButton.Name = "excelSaveButton";
-            this.excelSaveButton.Size = new System.Drawing.Size(75, 23);
-            this.excelSaveButton.TabIndex = 2;
-            this.excelSaveButton.Text = "Save";
-            this.excelSaveButton.UseVisualStyleBackColor = true;
-            this.excelSaveButton.Click += new System.EventHandler(this.excelSaveButton_Click);
-            // 
-            // excelLoadButton
-            // 
-            this.excelLoadButton.Location = new System.Drawing.Point(8, 6);
-            this.excelLoadButton.Name = "excelLoadButton";
-            this.excelLoadButton.Size = new System.Drawing.Size(75, 23);
-            this.excelLoadButton.TabIndex = 1;
-            this.excelLoadButton.Text = "Load";
-            this.excelLoadButton.UseVisualStyleBackColor = true;
-            this.excelLoadButton.Click += new System.EventHandler(this.excelLoadButton_Click);
+            this.AddButton.Location = new System.Drawing.Point(6, 406);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(87, 23);
+            this.AddButton.TabIndex = 1;
+            this.AddButton.Text = "추가";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(7, 40);
+            this.dataGridView1.Location = new System.Drawing.Point(208, 8);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(908, 405);
+            this.dataGridView1.Size = new System.Drawing.Size(707, 437);
             this.dataGridView1.TabIndex = 0;
             // 
             // tabPage2
@@ -206,6 +201,63 @@
             this.checkedListBox1.Size = new System.Drawing.Size(903, 384);
             this.checkedListBox1.TabIndex = 0;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.schoolNumInput);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.delButton);
+            this.groupBox2.Controls.Add(this.nameInput);
+            this.groupBox2.Controls.Add(this.AddButton);
+            this.groupBox2.Location = new System.Drawing.Point(8, 8);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(194, 437);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "관리";
+            // 
+            // nameInput
+            // 
+            this.nameInput.Location = new System.Drawing.Point(7, 96);
+            this.nameInput.Name = "nameInput";
+            this.nameInput.Size = new System.Drawing.Size(181, 25);
+            this.nameInput.TabIndex = 2;
+            // 
+            // delButton
+            // 
+            this.delButton.Location = new System.Drawing.Point(101, 406);
+            this.delButton.Name = "delButton";
+            this.delButton.Size = new System.Drawing.Size(87, 23);
+            this.delButton.TabIndex = 3;
+            this.delButton.Text = "삭제";
+            this.delButton.UseVisualStyleBackColor = true;
+            this.delButton.Click += new System.EventHandler(this.delButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "이름";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(37, 15);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "학번";
+            // 
+            // schoolNumInput
+            // 
+            this.schoolNumInput.Location = new System.Drawing.Point(6, 46);
+            this.schoolNumInput.Name = "schoolNumInput";
+            this.schoolNumInput.Size = new System.Drawing.Size(182, 25);
+            this.schoolNumInput.TabIndex = 3;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -223,6 +275,8 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -238,12 +292,17 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button excelSaveButton;
-        private System.Windows.Forms.Button excelLoadButton;
+        private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.TextBox searchText;
         private System.Windows.Forms.ComboBox searchType;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox nameInput;
+        private System.Windows.Forms.TextBox schoolNumInput;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button delButton;
     }
 }

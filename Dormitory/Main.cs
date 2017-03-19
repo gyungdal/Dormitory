@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GemBox.Spreadsheet;
-using GemBox.Spreadsheet.WinFormsUtilities;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
@@ -28,7 +26,7 @@ namespace Dormitory
         private bool isAdmin;
         private permission userPermission;
         private int prevTab = 0;
-        private JArray student, score, backup;
+        private JArray student, score, jsonData; 
         string permissionPrev = "";
         public enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
@@ -69,13 +67,28 @@ namespace Dormitory
         
         private void TabControl1_Selected(object sender, System.Windows.Forms.TabControlEventArgs e) {
             switch(e.TabPageIndex) {
-                case 1:
+                case 0:
                     string data = new StreamReader(((HttpWebRequest)WebRequest.Create(studentGetURL))
                         .GetResponse().GetResponseStream(), Encoding.UTF8, true).ReadToEnd().Trim();
                     MessageBox.Show(data);
-                    backup = score = JsonConvert.DeserializeObject<JArray>(data);
-                    this.dataGridView2.DataSource = score;
+                    //score = 
+                    jsonData = JsonConvert.DeserializeObject<JArray>(data);
+                    this.dataGridView1.DataSource = jsonData;
+                    this.dataGridView1.AutoGenerateColumns = true;
+                    this.dataGridView1.AllowUserToAddRows = false;
+
+                    break;
+
+                case 1:
+                    data = new StreamReader(((HttpWebRequest)WebRequest.Create(studentGetURL))
+                        .GetResponse().GetResponseStream(), Encoding.UTF8, true).ReadToEnd().Trim();
+                    MessageBox.Show(data);
+                    //score = 
+                    jsonData = JsonConvert.DeserializeObject<JArray>(data);
+                    this.dataGridView2.DataSource = jsonData;
                     this.dataGridView2.AutoGenerateColumns = true;
+                    this.dataGridView1.AllowUserToAddRows = false;
+
                     break;
                 case 2:
                     getPermissionData();
@@ -90,7 +103,7 @@ namespace Dormitory
                         MessageBox.Show(student.ToString());
                         break;
                     case 1:
-                        //score = gridParser(this.dataGridView2);
+                        score = gridParser(this.dataGridView2);
                         MessageBox.Show(score.ToString());
                         break;
                     case 2:
@@ -111,7 +124,7 @@ namespace Dormitory
             }
             prevTab = e.TabPageIndex;
         }
-
+        
         private permission getPermissionSeleted(string text) {
             switch (text) {
                 case "최고 관리자":
@@ -147,7 +160,6 @@ namespace Dormitory
             this.userPermission = type;
             //MessageBox.Show(type.ToString());
             InitializeComponent();
-            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             isSuperAdmin();
             this.searchType.Items.Add("학번");
             this.searchType.Items.Add("이름");
@@ -155,20 +167,16 @@ namespace Dormitory
             this.tabControl1.Selected += TabControl1_Selected;
             this.FormClosed += Main_FormClosed;
             this.KeyDown += Main_KeyDown;
-           
+            string data = new StreamReader(((HttpWebRequest)WebRequest.Create(studentGetURL))
+                         .GetResponse().GetResponseStream(), Encoding.UTF8, true).ReadToEnd().Trim();
+            MessageBox.Show(data);
+            //score = 
+            jsonData = JsonConvert.DeserializeObject<JArray>(data);
+            this.dataGridView1.DataSource = jsonData;
+            this.dataGridView1.AutoGenerateColumns = true;
+            this.dataGridView1.AllowUserToAddRows = false;
         }
-
-        private void LoadExcelToDataGridView(string excelFile) {
-            ExcelFile ef = ExcelFile.Load(excelFile);
-            ExcelWorksheet ws = ef.Worksheets[0];
-
-            // From ExcelFile to DataGridView.
-            DataGridViewConverter.ExportToDataGridView(
-                ws,
-                this.dataGridView1,
-                new ExportToDataGridViewOptions() { ColumnHeaders = true });
-            gridParser(this.dataGridView1);
-        }
+        
 
         private JObject getJson(string url, object json) {
             try {
@@ -229,59 +237,41 @@ namespace Dormitory
 //            MessageBox.Show(result.ToString());
         }
 
-        private void SaveExcelFromDataGridView(string excelFile) {
-            
-            ExcelFile ef = new ExcelFile();
-            ExcelWorksheet ws = ef.Worksheets.Add("DGW Sheet");
-
-            // From DataGridView to ExcelFile.
-            DataGridViewConverter.ImportFromDataGridView(
-                ws,
-                this.dataGridView1,
-                new ImportFromDataGridViewOptions() { ColumnHeaders = true });
-                        ef.Save(excelFile);
-        }
-        private void excelSaveButton_Click(object sender, EventArgs e) {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "XLS files (*.xls)|*.xls|XLT files (*.xlt)|*.xlt|XLSX files (*.xlsx)|*.xlsx|XLSM files (*.xlsm)|*.xlsm|XLTX (*.xltx)|*.xltx|XLTM (*.xltm)|*.xltm|ODS (*.ods)|*.ods|OTS (*.ots)|*.ots|CSV (*.csv)|*.csv|TSV (*.tsv)|*.tsv|HTML (*.html)|*.html|MHTML (.mhtml)|*.mhtml|PDF (*.pdf)|*.pdf|XPS (*.xps)|*.xps|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg)|*.jpg|PNG (*.png)|*.png|TIFF (*.tif)|*.tif|WMP (*.wdp)|*.wdp";
-            saveFileDialog.FilterIndex = 3;
-            gridParser(this.dataGridView1);
-            //if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                //this.SaveExcelFromDataGridView(saveFileDialog.FileName);
-        }
-
-        private void excelLoadButton_Click(object sender, EventArgs e) {
-
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XLS files (*.xls, *.xlt)|*.xls;*.xlt|XLSX files (*.xlsx, *.xlsm, *.xltx, *.xltm)|*.xlsx;*.xlsm;*.xltx;*.xltm|ODS files (*.ods, *.ots)|*.ods;*.ots|CSV files (*.csv, *.tsv)|*.csv;*.tsv|HTML files (*.html, *.htm)|*.html;*.htm";
-            openFileDialog.FilterIndex = 2;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-                this.LoadExcelToDataGridView(openFileDialog.FileName);
-        }
-
         private void searchButton_Click(object sender, EventArgs e) {
             
             string type = this.searchType.Text;
-            JArray array = new JArray();
+            List<JObject> array = new List<JObject>();
             switch (type) {
                 case "이름":
-                    foreach(JObject obj in backup) {
+                    foreach(JObject obj in jsonData) {
                         if (obj.GetValue("name").Value<string>().Contains(this.searchText.Text)) {
                             array.Add(obj);
                         }
                     }
                     break;
                 case "학번":
-                    foreach (JObject obj in backup) {
+                    foreach (JObject obj in jsonData) {
                         if (obj.GetValue("school_num").Value<string>().Contains(this.searchText.Text)) {
                             array.Add(obj);
                         }
                     }
                     break;
             }
-            score = array;
-            this.dataGridView2.DataSource = score;
+            this.dataGridView2.DataSource = array;
+        }
+
+        private void delButton_Click(object sender, EventArgs e) {
+            foreach(DataGridViewRow item in this.dataGridView1.SelectedRows) {
+                dataGridView1.Rows.RemoveAt(item.Index);
+            }
+        }
+
+        private void AddButton_Click(object sender, EventArgs e) {
+            JObject obj = new JObject();
+            obj.Add("name", this.nameInput.Text);
+            obj.Add("school_num", this.schoolNumInput.Text);
+            this.jsonData.Add(obj);
+            this.dataGridView1.Refresh();
         }
 
         private void getPermissionData() {
