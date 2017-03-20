@@ -18,6 +18,7 @@ namespace Dormitory
     public partial class Main : Form {
         private const string studentGetURL = "http://gyungdal.iptime.org:3141/student/get";
         private const string studentSetURL = "http://gyungdal.iptime.org:3141/student/set";
+        private const string studentAddURL = "http://gyungdal.iptime.org:3141/student/add";
         private const string pointGetURL = "http://gyungdal.iptime.org:3141/point/get";
         private const string pointSetURL = "http://gyungdal.iptime.org:3141/point/set";
         private const string permissionGetURL = "http://gyungdal.iptime.org:3141/permission/get";
@@ -26,7 +27,7 @@ namespace Dormitory
         private bool isAdmin;
         private permission userPermission;
         private int prevTab = 0;
-        private JArray student, score, jsonData; 
+        private JArray student, score, jsonData, addUser; 
         string permissionPrev = "";
         public enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
@@ -85,7 +86,7 @@ namespace Dormitory
                     this.dataGridView1.DataSource = jsonData;
                     this.dataGridView1.AutoGenerateColumns = true;
                     this.dataGridView1.AllowUserToAddRows = false;
-
+                    addUser = new JArray();
                     break;
 
                 case 1:
@@ -108,6 +109,7 @@ namespace Dormitory
                 switch (prevTab)
                 {
                     case 0:
+                        postJson(studentAddURL, this.addUser);
                         student = gridParser(this.dataGridView1);
                         MessageBox.Show(student.ToString());
                         break;
@@ -184,6 +186,7 @@ namespace Dormitory
             this.dataGridView1.DataSource = jsonData;
             this.dataGridView1.AutoGenerateColumns = true;
             this.dataGridView1.AllowUserToAddRows = false;
+            addUser = new JArray();
         }
         
 
@@ -276,9 +279,11 @@ namespace Dormitory
         }
 
         private void AddButton_Click(object sender, EventArgs e) {
+            
             JObject obj = new JObject();
-            obj.Add("name", this.nameInput.Text);
             obj.Add("school_num", this.schoolNumInput.Text);
+            obj.Add("name", this.nameInput.Text);
+            addUser.Add(obj);
             this.jsonData.Add(obj);
             this.dataGridView1.Refresh();
         }
