@@ -109,7 +109,8 @@ namespace Dormitory
                 switch (prevTab)
                 {
                     case 0:
-                        postJson(studentAddURL, this.addUser);
+                        if(addUser.Count >= 1)
+                            postJson(studentAddURL, this.addUser);
                         student = gridParser(this.dataGridView1);
                         MessageBox.Show(student.ToString());
                         break;
@@ -216,7 +217,7 @@ namespace Dormitory
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                byte[] postBody = Encoding.ASCII.GetBytes(json.ToString());
+                byte[] postBody = Encoding.UTF8.GetBytes(json.ToString());
                 using (Stream stream = httpWebRequest.GetRequestStream()) {
                     stream.Write(postBody, 0, postBody.Length);
                     using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse()) {
@@ -231,6 +232,11 @@ namespace Dormitory
 
         private JArray gridParser(DataGridView grid)
         {
+            string[] key;
+            if(grid == this.dataGridView2)
+                key = new string[] { "school_num", "name", "plus", "minus","phone_number"};
+            else
+                key = new string[]  { "school_num","name","phone_number"};
             JArray result = new JArray();
 
             for (int i = 0;i < grid.Rows.Count; i++)
@@ -239,7 +245,7 @@ namespace Dormitory
                 for (int j = 0; j < grid.Rows[i].Cells.Count; j++)
                 {
                    if (grid.Rows[i].Cells[j].Value != null) {
-                        jarray.Add(j.ToString(), grid.Rows[i].Cells[j].Value.ToString());
+                        jarray.Add(key[j], grid.Rows[i].Cells[j].Value.ToString());
                    }
                 }
                 result.Add(jarray);
