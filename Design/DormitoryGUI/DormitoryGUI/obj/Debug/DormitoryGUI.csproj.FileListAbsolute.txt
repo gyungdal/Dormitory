@@ -1,0 +1,10 @@
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.exe.config
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.exe
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.pdb
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Login.resources
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Main.resources
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Properties.Resources.resources
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.exe
+c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
