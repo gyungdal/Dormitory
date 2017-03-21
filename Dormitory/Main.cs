@@ -18,6 +18,7 @@ namespace Dormitory
     public partial class Main : Form {
         private const string studentGetURL = "http://gyungdal.iptime.org:3141/student/get";
         private const string studentSetURL = "http://gyungdal.iptime.org:3141/student/set";
+        private const string studentAddURL = "http://gyungdal.iptime.org:3141/student/add";
         private const string pointGetURL = "http://gyungdal.iptime.org:3141/point/get";
         private const string pointSetURL = "http://gyungdal.iptime.org:3141/point/set";
         private const string permissionGetURL = "http://gyungdal.iptime.org:3141/permission/get";
@@ -26,7 +27,7 @@ namespace Dormitory
         private bool isAdmin;
         private permission userPermission;
         private int prevTab = 0;
-        private JArray student, score, jsonData; 
+        private JArray student, score, jsonData, addUser; 
         string permissionPrev = "";
         public enum permission { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
         private List<KeyValuePair<string, bool>> admin, teacher, dormitoryTeacher;
@@ -86,7 +87,7 @@ namespace Dormitory
                     this.dataGridView1.DataSource = jsonData;
                     this.dataGridView1.AutoGenerateColumns = true;
                     this.dataGridView1.AllowUserToAddRows = false;
-
+                    addUser = new JArray();
                     break;
 
                 case 1:
@@ -109,6 +110,8 @@ namespace Dormitory
                 switch (prevTab)
                 {
                     case 0:
+                        if(addUser.Count >= 1)
+                            postJson(studentAddURL, this.addUser);
                         student = gridParser(this.dataGridView1);
                         MessageBox.Show(student.ToString());
                         break;
@@ -185,6 +188,7 @@ namespace Dormitory
             this.dataGridView1.DataSource = jsonData;
             this.dataGridView1.AutoGenerateColumns = true;
             this.dataGridView1.AllowUserToAddRows = false;
+            addUser = new JArray();
         }
         
 
@@ -214,7 +218,7 @@ namespace Dormitory
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                byte[] postBody = Encoding.ASCII.GetBytes(json.ToString());
+                byte[] postBody = Encoding.UTF8.GetBytes(json.ToString());
                 using (Stream stream = httpWebRequest.GetRequestStream()) {
                     stream.Write(postBody, 0, postBody.Length);
                     using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse()) {
@@ -229,6 +233,11 @@ namespace Dormitory
 
         private JArray gridParser(DataGridView grid)
         {
+            string[] key;
+            if(grid == this.dataGridView2)
+                key = new string[] { "school_num", "name", "plus", "minus","phone_number"};
+            else
+                key = new string[]  { "school_num","name","phone_number"};
             JArray result = new JArray();
 
             for (int i = 0;i < grid.Rows.Count; i++)
@@ -237,7 +246,7 @@ namespace Dormitory
                 for (int j = 0; j < grid.Rows[i].Cells.Count; j++)
                 {
                    if (grid.Rows[i].Cells[j].Value != null) {
-                        jarray.Add(j.ToString(), grid.Rows[i].Cells[j].Value.ToString());
+                        jarray.Add(key[j], grid.Rows[i].Cells[j].Value.ToString());
                    }
                 }
                 result.Add(jarray);
@@ -277,9 +286,11 @@ namespace Dormitory
         }
 
         private void AddButton_Click(object sender, EventArgs e) {
+            
             JObject obj = new JObject();
-            obj.Add("name", this.nameInput.Text);
             obj.Add("school_num", this.schoolNumInput.Text);
+            obj.Add("name", this.nameInput.Text);
+            addUser.Add(obj);
             this.jsonData.Add(obj);
             this.dataGridView1.Refresh();
         }
