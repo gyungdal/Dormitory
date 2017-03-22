@@ -81,7 +81,11 @@ namespace DormitoryGUI
                 Main main = new Main();
                 main.Permission = permission;
                 this.Hide();
-                main.Closed += (s, args) => this.Close();
+                main.Closed += (s, args) =>
+                {
+                    this.Close();
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                };
                 main.Show();
             }
             else
