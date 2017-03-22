@@ -8,3 +8,15 @@ c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGU
 c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
 c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 c:\users\xenoaron\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.exe.config
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.exe
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.pdb
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Login.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Main.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Properties.Resources.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.exe
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\Newtonsoft.Json.dll
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\Newtonsoft.Json.xml

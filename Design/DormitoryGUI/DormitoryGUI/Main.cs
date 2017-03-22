@@ -12,9 +12,14 @@ namespace DormitoryGUI
 {
     public partial class Main : Form
     {
+        private Info.PERMISSION permission;
+
+        internal Info.PERMISSION Permission { get => permission; set => permission = value; }
+
         public Main()
         {
             InitializeComponent();
         }
+
     }
 }
