@@ -26,5 +26,11 @@ namespace DormitoryGUI
             Permission permission = new Permission();
             permission.Show();
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            ListControl list = new ListControl();
+            list.Show();
+        }
     }
 }

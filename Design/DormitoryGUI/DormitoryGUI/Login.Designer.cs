@@ -46,14 +46,14 @@
             this.pw.Name = "pw";
             this.pw.PasswordChar = '*';
             this.pw.Size = new System.Drawing.Size(270, 25);
-            this.pw.TabIndex = 0;
+            this.pw.TabIndex = 1;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(89, 103);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(270, 37);
-            this.button1.TabIndex = 1;
+            this.button1.TabIndex = 2;
             this.button1.Text = "login";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);

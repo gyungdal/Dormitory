@@ -22,3 +22,17 @@ D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.xml
 D:\Develop\Project\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.WinFormsUtilities.xml
 D:\Develop\Project\dormitory\Dormitory\bin\Debug\Newtonsoft.Json.dll
 D:\Develop\Project\dormitory\Dormitory\bin\Debug\Newtonsoft.Json.xml
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\bin\Debug\Dormitory.exe.config
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\bin\Debug\Dormitory.exe
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\bin\Debug\Dormitory.pdb
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\bin\Debug\Newtonsoft.Json.dll
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.xml
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\bin\Debug\GemBox.Spreadsheet.WinFormsUtilities.xml
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\bin\Debug\Newtonsoft.Json.xml
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\obj\Debug\Dormitory.csprojResolveAssemblyReference.cache
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\obj\Debug\Dormitory.Login.resources
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\obj\Debug\Dormitory.Main.resources
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\obj\Debug\Dormitory.Properties.Resources.resources
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\obj\Debug\Dormitory.csproj.GenerateResource.Cache
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\obj\Debug\Dormitory.exe
+C:\Users\XenoAron\Dev\Projects\dormitory\Dormitory\obj\Debug\Dormitory.pdb

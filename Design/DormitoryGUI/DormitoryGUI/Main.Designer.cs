@@ -30,6 +30,9 @@
         {
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("30220");
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -64,9 +67,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -91,6 +91,35 @@
             this.panel1.Size = new System.Drawing.Size(1089, 95);
             this.panel1.TabIndex = 0;
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(589, 19);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(113, 56);
+            this.button9.TabIndex = 5;
+            this.button9.Text = "권한 관리";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(471, 20);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(112, 56);
+            this.button8.TabIndex = 4;
+            this.button8.Text = "상ㆍ벌 항목";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(353, 20);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(112, 56);
+            this.button7.TabIndex = 3;
+            this.button7.Text = "징계 대상자 조회";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(709, 51);
@@ -113,6 +142,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(75, 51);
             this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(272, 25);
             this.textBox2.TabIndex = 1;
             this.textBox2.Text = "(자동)";
@@ -122,6 +152,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(75, 20);
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(272, 25);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "(자동)";
@@ -226,7 +257,6 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(133, 25);
             this.textBox3.TabIndex = 1;
-            this.textBox3.Text = "(자동)";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox4
@@ -235,7 +265,6 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(133, 25);
             this.textBox4.TabIndex = 1;
-            this.textBox4.Text = "(자동)";
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label3
@@ -404,34 +433,6 @@
             this.label6.Size = new System.Drawing.Size(87, 15);
             this.label6.TabIndex = 0;
             this.label6.Text = "상ㆍ벌 분류";
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(353, 20);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(112, 56);
-            this.button7.TabIndex = 3;
-            this.button7.Text = "징계 대상자 조회";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(471, 20);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(112, 56);
-            this.button8.TabIndex = 4;
-            this.button8.Text = "상ㆍ벌 항목";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(589, 19);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(113, 56);
-            this.button9.TabIndex = 5;
-            this.button9.Text = "권한 관리";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // Main
             // 

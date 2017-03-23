@@ -20,3 +20,16 @@ D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\Dormitor
 D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
 D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\Newtonsoft.Json.dll
 D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.exe.config
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.exe
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\DormitoryGUI.pdb
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Login.resources
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Main.resources
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.Properties.Resources.resources
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.exe
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.ListControl.resources
