@@ -60,6 +60,12 @@
     <Compile Include="Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="Permission.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Permission.Designer.cs">
+      <DependentUpon>Permission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Info.cs" />
