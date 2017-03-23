@@ -17,7 +17,7 @@ namespace DormitoryGUI
     public partial class Login : Form
     {
         public Login()
-        {
+         {
             InitializeComponent();
         }
 
