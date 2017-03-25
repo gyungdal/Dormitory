@@ -33,6 +33,8 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.maxPoint = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.minScore = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,8 +42,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.typeBad = new System.Windows.Forms.RadioButton();
             this.typeGood = new System.Windows.Forms.RadioButton();
-            this.label3 = new System.Windows.Forms.Label();
-            this.maxPoint = new System.Windows.Forms.ComboBox();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +51,8 @@
             // 
             this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2});
+            this.columnHeader2,
+            this.columnHeader3});
             this.listView2.Location = new System.Drawing.Point(12, 61);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(571, 339);
@@ -61,12 +63,12 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "항목명";
-            this.columnHeader1.Width = 500;
+            this.columnHeader1.Width = 365;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "점수";
-            this.columnHeader2.Width = 67;
+            this.columnHeader2.Text = "최소 점수";
+            this.columnHeader2.Width = 100;
             // 
             // comboBox1
             // 
@@ -95,6 +97,23 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "항목 추가";
+            // 
+            // maxPoint
+            // 
+            this.maxPoint.FormattingEnabled = true;
+            this.maxPoint.Location = new System.Drawing.Point(253, 316);
+            this.maxPoint.Name = "maxPoint";
+            this.maxPoint.Size = new System.Drawing.Size(121, 23);
+            this.maxPoint.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(250, 286);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(72, 15);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "최대 점수";
             // 
             // minScore
             // 
@@ -174,22 +193,10 @@
             this.typeGood.Text = "상점";
             this.typeGood.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // columnHeader3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(250, 286);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "최대 점수";
-            // 
-            // maxPoint
-            // 
-            this.maxPoint.FormattingEnabled = true;
-            this.maxPoint.Location = new System.Drawing.Point(253, 316);
-            this.maxPoint.Name = "maxPoint";
-            this.maxPoint.Size = new System.Drawing.Size(121, 23);
-            this.maxPoint.TabIndex = 6;
+            this.columnHeader3.Text = "최대 점수";
+            this.columnHeader3.Width = 100;
             // 
             // ListControl
             // 
@@ -224,5 +231,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox maxPoint;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }

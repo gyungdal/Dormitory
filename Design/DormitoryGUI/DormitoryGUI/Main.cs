@@ -83,10 +83,12 @@ namespace DormitoryGUI
             return JObject.Parse("{}");
         }
 
-        private void limitFunctionWithPermssion()
+        public void limitFunctionWithPermssion()
         {
-            this.permissionManagerButton.Enabled = (permissionType == Info.PERMISSION.ADMIN);
-            this.ScoreManagerButton.Enabled = canEditScore;
+            if (permissionType != Info.PERMISSION.ADMIN)
+                this.permissionManagerButton.Hide();
+            if (!canEditScore)
+                this.ScoreManagerButton.Hide();
             
         }
         private void postJson(string url, object json)

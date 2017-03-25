@@ -87,6 +87,7 @@ namespace DormitoryGUI
                     (Int32.Parse(response["STUDENT_MANAGE"].ToString()) == 1
                     , Int32.Parse(response["SCORE_MANAGE"].ToString()) == 1);
                 main.update();
+                main.limitFunctionWithPermssion();
                 this.Hide();
                 main.Closed += (s, args) =>
                 {
