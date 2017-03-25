@@ -10,7 +10,7 @@ namespace DormitoryGUI
     {
         public class Server
         {
-            private const string SERVER_URL = "http://gyungdal.iptime.org:3141/";
+            private const string SERVER_URL = "http://dsm2015.cafe24.com:3141/";
             public const string LOGIN_URL = SERVER_URL + "login";
             public const string GET_PERMISSION_URL = SERVER_URL + "permission/get";
             public const string SET_PERMSSION_URL = SERVER_URL + "permission/set";

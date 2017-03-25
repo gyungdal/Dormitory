@@ -30,13 +30,13 @@
         {
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("30220");
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.permissionManagerButton = new System.Windows.Forms.Button();
+            this.ScoreManagerButton = new System.Windows.Forms.Button();
+            this.punishmentLookupButton = new System.Windows.Forms.Button();
+            this.saveExcelButton = new System.Windows.Forms.Button();
+            this.loadExcelButton = new System.Windows.Forms.Button();
+            this.teacherName = new System.Windows.Forms.TextBox();
+            this.date = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -47,8 +47,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.schoolName = new System.Windows.Forms.TextBox();
+            this.schoolNum = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -60,7 +60,7 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel4 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
+            this.giveScoreButton = new System.Windows.Forms.Button();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -77,13 +77,13 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.button9);
-            this.panel1.Controls.Add(this.button8);
-            this.panel1.Controls.Add(this.button7);
-            this.panel1.Controls.Add(this.button5);
-            this.panel1.Controls.Add(this.button4);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.permissionManagerButton);
+            this.panel1.Controls.Add(this.ScoreManagerButton);
+            this.panel1.Controls.Add(this.punishmentLookupButton);
+            this.panel1.Controls.Add(this.saveExcelButton);
+            this.panel1.Controls.Add(this.loadExcelButton);
+            this.panel1.Controls.Add(this.teacherName);
+            this.panel1.Controls.Add(this.date);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(1, 0);
@@ -91,72 +91,72 @@
             this.panel1.Size = new System.Drawing.Size(1089, 95);
             this.panel1.TabIndex = 0;
             // 
-            // button9
+            // permissionManagerButton
             // 
-            this.button9.Location = new System.Drawing.Point(589, 19);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(113, 56);
-            this.button9.TabIndex = 5;
-            this.button9.Text = "권한 관리";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.permissionManagerButton.Location = new System.Drawing.Point(589, 19);
+            this.permissionManagerButton.Name = "permissionManagerButton";
+            this.permissionManagerButton.Size = new System.Drawing.Size(113, 56);
+            this.permissionManagerButton.TabIndex = 5;
+            this.permissionManagerButton.Text = "권한 관리";
+            this.permissionManagerButton.UseVisualStyleBackColor = true;
+            this.permissionManagerButton.Click += new System.EventHandler(this.button9_Click);
             // 
-            // button8
+            // ScoreManagerButton
             // 
-            this.button8.Location = new System.Drawing.Point(471, 20);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(112, 56);
-            this.button8.TabIndex = 4;
-            this.button8.Text = "상ㆍ벌 항목";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.ScoreManagerButton.Location = new System.Drawing.Point(471, 20);
+            this.ScoreManagerButton.Name = "ScoreManagerButton";
+            this.ScoreManagerButton.Size = new System.Drawing.Size(112, 56);
+            this.ScoreManagerButton.TabIndex = 4;
+            this.ScoreManagerButton.Text = "상ㆍ벌 항목";
+            this.ScoreManagerButton.UseVisualStyleBackColor = true;
+            this.ScoreManagerButton.Click += new System.EventHandler(this.button8_Click);
             // 
-            // button7
+            // punishmentLookupButton
             // 
-            this.button7.Location = new System.Drawing.Point(353, 20);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(112, 56);
-            this.button7.TabIndex = 3;
-            this.button7.Text = "징계 대상자 조회";
-            this.button7.UseVisualStyleBackColor = true;
+            this.punishmentLookupButton.Location = new System.Drawing.Point(353, 20);
+            this.punishmentLookupButton.Name = "punishmentLookupButton";
+            this.punishmentLookupButton.Size = new System.Drawing.Size(112, 56);
+            this.punishmentLookupButton.TabIndex = 3;
+            this.punishmentLookupButton.Text = "징계 대상자 조회";
+            this.punishmentLookupButton.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // saveExcelButton
             // 
-            this.button5.Location = new System.Drawing.Point(709, 51);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(368, 25);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "현재 내용 엑셀로 저장하기";
-            this.button5.UseVisualStyleBackColor = true;
+            this.saveExcelButton.Location = new System.Drawing.Point(709, 51);
+            this.saveExcelButton.Name = "saveExcelButton";
+            this.saveExcelButton.Size = new System.Drawing.Size(368, 25);
+            this.saveExcelButton.TabIndex = 2;
+            this.saveExcelButton.Text = "현재 내용 엑셀로 저장하기";
+            this.saveExcelButton.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // loadExcelButton
             // 
-            this.button4.Location = new System.Drawing.Point(709, 20);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(368, 25);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "학생 목록 엑셀에서 불러오기";
-            this.button4.UseVisualStyleBackColor = true;
+            this.loadExcelButton.Location = new System.Drawing.Point(709, 20);
+            this.loadExcelButton.Name = "loadExcelButton";
+            this.loadExcelButton.Size = new System.Drawing.Size(368, 25);
+            this.loadExcelButton.TabIndex = 2;
+            this.loadExcelButton.Text = "학생 목록 엑셀에서 불러오기";
+            this.loadExcelButton.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // teacherName
             // 
-            this.textBox2.Location = new System.Drawing.Point(75, 51);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(272, 25);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "(자동)";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.teacherName.Location = new System.Drawing.Point(75, 51);
+            this.teacherName.Name = "teacherName";
+            this.teacherName.ReadOnly = true;
+            this.teacherName.Size = new System.Drawing.Size(272, 25);
+            this.teacherName.TabIndex = 1;
+            this.teacherName.Text = "(자동)";
+            this.teacherName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox1
+            // date
             // 
-            this.textBox1.Location = new System.Drawing.Point(75, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(272, 25);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "(자동)";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.date.Location = new System.Drawing.Point(75, 20);
+            this.date.Name = "date";
+            this.date.ReadOnly = true;
+            this.date.Size = new System.Drawing.Size(272, 25);
+            this.date.TabIndex = 1;
+            this.date.Text = "(자동)";
+            this.date.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
@@ -183,8 +183,8 @@
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.textBox3);
-            this.panel2.Controls.Add(this.textBox4);
+            this.panel2.Controls.Add(this.schoolName);
+            this.panel2.Controls.Add(this.schoolNum);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Location = new System.Drawing.Point(1, 94);
@@ -207,6 +207,7 @@
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -251,21 +252,21 @@
             this.label5.TabIndex = 2;
             this.label5.Text = "검색";
             // 
-            // textBox3
+            // schoolName
             // 
-            this.textBox3.Location = new System.Drawing.Point(53, 75);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(133, 25);
-            this.textBox3.TabIndex = 1;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.schoolName.Location = new System.Drawing.Point(53, 75);
+            this.schoolName.Name = "schoolName";
+            this.schoolName.Size = new System.Drawing.Size(133, 25);
+            this.schoolName.TabIndex = 1;
+            this.schoolName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox4
+            // schoolNum
             // 
-            this.textBox4.Location = new System.Drawing.Point(53, 44);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(133, 25);
-            this.textBox4.TabIndex = 1;
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.schoolNum.Location = new System.Drawing.Point(53, 44);
+            this.schoolNum.Name = "schoolNum";
+            this.schoolNum.Size = new System.Drawing.Size(133, 25);
+            this.schoolNum.TabIndex = 1;
+            this.schoolNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label3
             // 
@@ -359,7 +360,7 @@
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.button6);
+            this.panel4.Controls.Add(this.giveScoreButton);
             this.panel4.Controls.Add(this.comboBox3);
             this.panel4.Controls.Add(this.comboBox2);
             this.panel4.Controls.Add(this.comboBox1);
@@ -371,14 +372,14 @@
             this.panel4.Size = new System.Drawing.Size(804, 132);
             this.panel4.TabIndex = 3;
             // 
-            // button6
+            // giveScoreButton
             // 
-            this.button6.Location = new System.Drawing.Point(590, 23);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(202, 91);
-            this.button6.TabIndex = 2;
-            this.button6.Text = "점수 부여";
-            this.button6.UseVisualStyleBackColor = true;
+            this.giveScoreButton.Location = new System.Drawing.Point(590, 23);
+            this.giveScoreButton.Name = "giveScoreButton";
+            this.giveScoreButton.Size = new System.Drawing.Size(202, 91);
+            this.giveScoreButton.TabIndex = 2;
+            this.giveScoreButton.Text = "점수 부여";
+            this.giveScoreButton.UseVisualStyleBackColor = true;
             // 
             // comboBox3
             // 
@@ -463,11 +464,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox teacherName;
+        private System.Windows.Forms.TextBox date;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox schoolName;
+        private System.Windows.Forms.TextBox schoolNum;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -492,11 +493,11 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button saveExcelButton;
+        private System.Windows.Forms.Button loadExcelButton;
+        private System.Windows.Forms.Button giveScoreButton;
+        private System.Windows.Forms.Button permissionManagerButton;
+        private System.Windows.Forms.Button ScoreManagerButton;
+        private System.Windows.Forms.Button punishmentLookupButton;
     }
 }

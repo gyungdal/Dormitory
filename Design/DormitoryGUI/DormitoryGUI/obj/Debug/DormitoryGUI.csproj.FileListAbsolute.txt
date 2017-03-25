@@ -33,3 +33,4 @@ C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\De
 C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
 C:\Users\XenoAron\Dev\Projects\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.ListControl.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.ListControl.resources
