@@ -17,9 +17,18 @@ namespace DormitoryGUI
     public partial class Login : Form
     {
         public Login()
-         {
+        {
             InitializeComponent();
             this.Text = "로그인";
+            this.pw.KeyUp += Pw_KeyUp;
+        }
+
+        private void Pw_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                button1_Click(sender, null);
+            }
         }
 
         private static string sha1Encrypt(string input)
@@ -67,11 +76,11 @@ namespace DormitoryGUI
                 {
                     case 0:
                         return Info.PERMISSION.ADMIN;
-                    case 1:    
+                    case 1:
                         return Info.PERMISSION.DORMITORY_TEACHER;
-                    case 2:    
+                    case 2:
                         return Info.PERMISSION.NORMAL_TEACHER;
-                    default:  
+                    default:
                         return Info.PERMISSION.ERROR;
                 }
             }
@@ -101,5 +110,6 @@ namespace DormitoryGUI
                 MessageBox.Show("Login fail...");
             }
         }
+
     }
 }

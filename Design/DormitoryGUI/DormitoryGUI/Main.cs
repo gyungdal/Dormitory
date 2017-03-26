@@ -86,10 +86,17 @@ namespace DormitoryGUI
         public void limitFunctionWithPermssion()
         {
             if (permissionType != Info.PERMISSION.ADMIN)
-                this.permissionManagerButton.Hide();
+                this.permissionManagerButton.Enabled = false;
             if (!canEditScore)
-                this.ScoreManagerButton.Hide();
-            
+            {
+                this.ScoreManagerButton.Enabled = false;
+                this.giveScoreButton.Enabled = false;
+            }
+            if (!canEditStudent)
+            {
+                this.loadExcelButton.Enabled = false;
+                this.saveExcelButton.Enabled = false;
+            }
         }
         private void postJson(string url, object json)
         {
