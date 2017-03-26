@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("30220");
             this.panel1 = new System.Windows.Forms.Panel();
             this.permissionManagerButton = new System.Windows.Forms.Button();
             this.ScoreManagerButton = new System.Windows.Forms.Button();
@@ -199,8 +198,6 @@
             this.columnHeader2,
             this.columnHeader3});
             this.listView1.FullRowSelect = true;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
             this.listView1.Location = new System.Drawing.Point(3, 106);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(278, 329);
@@ -217,7 +214,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "호실";
-            this.columnHeader2.Width = 80;
+            this.columnHeader2.Width = 50;
             // 
             // columnHeader3
             // 
