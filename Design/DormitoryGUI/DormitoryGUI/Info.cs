@@ -16,6 +16,7 @@ namespace DormitoryGUI
             public const string SET_PERMSSION_URL = SERVER_URL + "permission/set";
             public const string GET_MASTER_DATA = SERVER_URL + "info/master";
             public const string GET_DETAIL_DATA = SERVER_URL + "info/detail";
+            public const string GET_SCORE_DATA = SERVER_URL + "scoreinfo/get";
         }
         public enum PERMISSION { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
     }

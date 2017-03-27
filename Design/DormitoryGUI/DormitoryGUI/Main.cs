@@ -18,7 +18,7 @@ namespace DormitoryGUI
         private Info.PERMISSION permissionType;
         private bool canEditStudent, canEditScore;
         private string name;
-        private JArray studentList;
+        private JArray studentList, scoreList;
        
         internal KeyValuePair<bool, bool> PermissionData {
             get => new KeyValuePair<bool, bool>(canEditStudent, canEditScore);
@@ -35,6 +35,43 @@ namespace DormitoryGUI
             InitializeComponent();
             this.Text = "메인페이지";
             this.listView1.DoubleClick += ListView1_DoubleClick;
+            this.comboBox1.Items.Add("벌점");
+            this.comboBox1.Items.Add("상점");
+            this.comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
+            this.comboBox2.SelectedIndexChanged += ComboBox2_SelectedIndexChanged;
+            
+        }
+
+        private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            string select = comboBox.SelectedItem.ToString();
+            int max = 0, min = 0;
+            foreach (JObject obj in scoreList)
+            {
+                if (obj["POINT_MEMO"].ToString().Equals(select))
+                {
+                    min = Int32.Parse(obj["POINT_VALUE_MIN"].ToString());
+                    max = Int32.Parse(obj["POINT_VALUE_MAX"].ToString());
+                }
+            }
+            comboBox3.Items.Clear();
+            for(int i = min; i <= max; )
+            {
+                comboBox3.Items.Add(i++);
+            }
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            int select = comboBox.SelectedIndex;
+            this.comboBox2.Items.Clear();
+            foreach(JObject obj in scoreList)
+            {
+                if(Int32.Parse(obj["POINT_TYPE"].ToString()) == select)
+                    this.comboBox2.Items.Add(obj["POINT_MEMO"].ToString());
+            }
         }
 
         private void ListView1_DoubleClick(object sender, EventArgs e)
@@ -60,6 +97,8 @@ namespace DormitoryGUI
                     json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
                     json["USER_NAME"].ToString()}));
             }
+            obj = multiJson(Info.Server.GET_SCORE_DATA, "");
+            scoreList = (JArray)obj;
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -104,6 +143,7 @@ namespace DormitoryGUI
             }
             return null;
         }
+        
 
         public void limitFunctionWithPermssion()
         {
@@ -145,10 +185,7 @@ namespace DormitoryGUI
                             MessageBox.Show(dbg.ToString());
                         }
                     }
-                
-                
-                    
-                }
+                } 
                 MessageBox.Show(item.SubItems[0].Text);
             }
         }
