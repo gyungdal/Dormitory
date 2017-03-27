@@ -202,14 +202,21 @@ namespace DormitoryGUI
                         
                         JArray result = (JArray)temp;
                         JArray view = new JArray();
+                        int good = 0, bad = 0;
                         foreach(JObject obj in result)
                         {
                             JObject t = new JObject();
                             t.Add("항목명", obj["POINT_MEMO"].ToString());
                             t.Add("상/벌점 분류", obj["POINT_TYPE"].ToString().Equals("1") ? "상점" : "벌점");
                             t.Add("점수", obj["POINT_VALUE"].ToString());
+                            if (obj["POINT_TYPE"].ToString().Equals("1"))
+                                good += Int32.Parse(obj["POINT_VALUE"].ToString());
+                            else
+                                bad += Int32.Parse(obj["POINT_VALUE"].ToString());
                             t.Add("메모", obj["LOG_MEMO"].ToString());
                             t.Add("부여 시간", obj["CREATE_TIME"].ToString());
+                            t.Add("총 상점", good);
+                            t.Add("총 벌점", bad);
                             view.Add(t);
                         }
                         this.dataGridView1.DataSource = JsonConvert.DeserializeObject<JArray>(view.ToString());
