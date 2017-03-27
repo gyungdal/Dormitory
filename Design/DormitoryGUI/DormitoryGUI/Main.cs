@@ -174,7 +174,7 @@ namespace DormitoryGUI
                     {
                         int uuid = Int32.Parse(json["USER_UUID"].ToString());
                         JObject jobj = new JObject();
-                        jobj.Add("uuid", uuid);
+                        jobj.Add("user_uuid", uuid);
                         object temp = multiJson(Info.Server.GET_DETAIL_DATA, jobj);
                         if(temp == null)
                             return;
