@@ -92,6 +92,7 @@ namespace DormitoryGUI
                 Main main = new Main();
                 main.PermissionType = permission;
                 main.Name = response["USER_NAME"].ToString();
+                main.TeacherUUID = Int32.Parse(response["TEACHER_UUID"].ToString());
                 main.PermissionData = new KeyValuePair<bool, bool>
                     (Int32.Parse(response["STUDENT_MANAGE"].ToString()) == 1
                     , Int32.Parse(response["SCORE_MANAGE"].ToString()) == 1);

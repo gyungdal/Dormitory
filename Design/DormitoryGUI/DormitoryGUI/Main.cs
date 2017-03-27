@@ -20,10 +20,12 @@ namespace DormitoryGUI
     public partial class Main : Form
     {
         private Info.PERMISSION permissionType;
+        private int teacherUUID;
         private bool canEditStudent, canEditScore;
         private string name;
         private JArray studentList, scoreList;
        
+        internal int TeacherUUID { get => teacherUUID; set => teacherUUID = value; }
         internal KeyValuePair<bool, bool> PermissionData {
             get => new KeyValuePair<bool, bool>(canEditStudent, canEditScore);
             set {
@@ -168,14 +170,39 @@ namespace DormitoryGUI
 
         private void giveScoreButton_Click(object sender, EventArgs e)
         {
-            if(this.comboBox3.SelectedItem != null)
+            if (this.comboBox3.SelectedItem != null)
             {
+                JObject post = new JObject();
                 string memo = Interaction.InputBox("메모를 입력하시겠습니까?", "메모", "");
                 if (memo.Trim().Length == 0)
                     memo = comboBox2.Items[comboBox2.SelectedIndex].ToString();
-                MessageBox.Show(memo);
+                JArray uuids = new JArray();
+                foreach (ListViewItem item in this.listView2.Items)
+                {
+                    foreach (JObject json in studentList)
+                    {
+                        if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
+                        json["USER_SCHOOL_ROOM_NUMBER"].ToString().Equals(item.SubItems[1].Text) &
+                        json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
+                        {
+                            uuids.Add(Int32.Parse(json["USER_UUID"].ToString()));
+                        }
+                    }
+                }
+                post.Add("TEACHER_UUID", teacherUUID);
+                post.Add("STUDENT_UUID", uuids);
+                post.Add("POINT_TYPE", this.comboBox1.SelectedIndex);
+                post.Add("POINT_VALUE", this.comboBox3.SelectedItem.ToString());
+                post.Add("LOG_MEMO", memo);
+                foreach (JObject obj in scoreList)
+                {
+                    if (obj["POINT_MEMO"].ToString().Equals(this.comboBox2.SelectedItem.ToString()))
+                    {
+                        post.Add("POINT_UUID", Int32.Parse(obj["POINT_UUID"].ToString()));
+                    }
+                }
+                MessageBox.Show(post.ToString());
             }
-
         }
 
         private void delListview2_Click(object sender, EventArgs e)
