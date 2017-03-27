@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -67,6 +68,7 @@ namespace DormitoryGUI
             ComboBox comboBox = (ComboBox)sender;
             int select = comboBox.SelectedIndex;
             this.comboBox2.Items.Clear();
+            this.comboBox3.Items.Clear();
             foreach(JObject obj in scoreList)
             {
                 if(Int32.Parse(obj["POINT_TYPE"].ToString()) == select)
@@ -143,7 +145,18 @@ namespace DormitoryGUI
             }
             return null;
         }
-        
+
+        private void giveScoreButton_Click(object sender, EventArgs e)
+        {
+            if(this.comboBox3.SelectedItem != null)
+            {
+                string memo = Interaction.InputBox("메모를 입력하시겠습니까?", "메모", "");
+                if (memo.Trim().Length == 0)
+                    memo = comboBox2.Items[comboBox2.SelectedIndex].ToString();
+                MessageBox.Show(memo);
+            }
+
+        }
 
         public void limitFunctionWithPermssion()
         {

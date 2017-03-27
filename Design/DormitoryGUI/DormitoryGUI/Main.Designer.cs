@@ -377,6 +377,7 @@
             this.giveScoreButton.TabIndex = 2;
             this.giveScoreButton.Text = "점수 부여";
             this.giveScoreButton.UseVisualStyleBackColor = true;
+            this.giveScoreButton.Click += new System.EventHandler(this.giveScoreButton_Click);
             // 
             // comboBox3
             // 
