@@ -12,6 +12,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace DormitoryGUI
 {
@@ -41,9 +43,26 @@ namespace DormitoryGUI
             this.comboBox1.Items.Add("상점");
             this.comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
             this.comboBox2.SelectedIndexChanged += ComboBox2_SelectedIndexChanged;
-            
         }
 
+        #region 메모리해제
+        private static void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception e)
+            {
+                obj = null;
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+        #endregion
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
