@@ -51,8 +51,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.descText = new System.Windows.Forms.Label();
+            this.delListview2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -286,8 +286,8 @@
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Controls.Add(this.button3);
+            this.panel3.Controls.Add(this.descText);
+            this.panel3.Controls.Add(this.delListview2);
             this.panel3.Controls.Add(this.dataGridView1);
             this.panel3.Controls.Add(this.listView2);
             this.panel3.Location = new System.Drawing.Point(286, 94);
@@ -295,25 +295,26 @@
             this.panel3.Size = new System.Drawing.Size(804, 309);
             this.panel3.TabIndex = 2;
             // 
-            // label9
+            // descText
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(33, 80);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(407, 105);
-            this.label9.TabIndex = 5;
-            this.label9.Text = "이쪽에는 DataGridView로 검색해서 선택한 녀석의 로그 표시\r\n컬럼은 { 날짜, 상점, 벌점, 메모, 교사명, 총상점, 총벌점 }\r\n이렇게" +
+            this.descText.AutoSize = true;
+            this.descText.Location = new System.Drawing.Point(33, 80);
+            this.descText.Name = "descText";
+            this.descText.Size = new System.Drawing.Size(407, 105);
+            this.descText.TabIndex = 5;
+            this.descText.Text = "이쪽에는 DataGridView로 검색해서 선택한 녀석의 로그 표시\r\n컬럼은 { 날짜, 상점, 벌점, 메모, 교사명, 총상점, 총벌점 }\r\n이렇게" +
     "\r\n\r\nrow 더블클릭하면 오른쪽 list에 추가 됨.\r\n밑의 콤보박스 + 버튼으로 일괄 점수부여 가능\r\n(급식상점, 청결상점 등에 응용 가능)" +
     "";
             // 
-            // button3
+            // delListview2
             // 
-            this.button3.Location = new System.Drawing.Point(499, 279);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(304, 29);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "제외하기";
-            this.button3.UseVisualStyleBackColor = true;
+            this.delListview2.Location = new System.Drawing.Point(499, 279);
+            this.delListview2.Name = "delListview2";
+            this.delListview2.Size = new System.Drawing.Size(304, 29);
+            this.delListview2.TabIndex = 4;
+            this.delListview2.Text = "제외하기";
+            this.delListview2.UseVisualStyleBackColor = true;
+            this.delListview2.Click += new System.EventHandler(this.delListview2_Click);
             // 
             // dataGridView1
             // 
@@ -479,7 +480,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button delListview2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.Label label8;
@@ -487,7 +488,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label descText;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox1;

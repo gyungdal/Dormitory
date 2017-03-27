@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -158,6 +159,12 @@ namespace DormitoryGUI
 
         }
 
+        private void delListview2_Click(object sender, EventArgs e)
+        {
+            if(this.listView2.SelectedItems.Count != 0)
+               this.listView2.Items.RemoveAt(this.listView2.SelectedItems[0].Index);
+        }
+
         public void limitFunctionWithPermssion()
         {
             if (permissionType != Info.PERMISSION.ADMIN)
@@ -176,6 +183,7 @@ namespace DormitoryGUI
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.descText.Hide();
             ListView.SelectedListViewItemCollection selects = this.listView1.SelectedItems;
             foreach(ListViewItem item in selects)
             {
@@ -193,13 +201,22 @@ namespace DormitoryGUI
                             return;
                         
                         JArray result = (JArray)temp;
-                        foreach (JObject dbg in result)
+                        JArray view = new JArray();
+                        foreach(JObject obj in result)
                         {
-                            MessageBox.Show(dbg.ToString());
+                            JObject t = new JObject();
+                            t.Add("항목명", obj["POINT_MEMO"].ToString());
+                            t.Add("상/벌점 분류", obj["POINT_TYPE"].ToString().Equals("1") ? "상점" : "벌점");
+                            t.Add("점수", obj["POINT_VALUE"].ToString());
+                            t.Add("메모", obj["LOG_MEMO"].ToString());
+                            t.Add("부여 시간", obj["CREATE_TIME"].ToString());
+                            view.Add(t);
                         }
+                        this.dataGridView1.DataSource = JsonConvert.DeserializeObject<JArray>(view.ToString());
+                        this.dataGridView1.AllowUserToAddRows = false;
+                        
                     }
                 } 
-                MessageBox.Show(item.SubItems[0].Text);
             }
         }
     }
