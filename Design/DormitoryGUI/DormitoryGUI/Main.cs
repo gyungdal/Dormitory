@@ -103,7 +103,17 @@ namespace DormitoryGUI
             ListView.SelectedListViewItemCollection items =  this.listView1.SelectedItems;
             foreach(ListViewItem item in items)
             {
-                this.listView2.Items.Add((ListViewItem)item.Clone());
+                bool temp = false;
+                foreach (ListViewItem deb in this.listView2.Items)
+                {
+                    if (deb.SubItems[1].ToString().Equals(item.SubItems[1].ToString()) &
+                       deb.SubItems[2].ToString().Equals(item.SubItems[2].ToString())) {
+                        temp = true;
+                        break;
+                    }
+                }
+                if (!temp)
+                    this.listView2.Items.Add((ListViewItem)item.Clone());
             }
          }
 
