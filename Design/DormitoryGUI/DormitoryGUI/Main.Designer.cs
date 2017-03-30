@@ -137,6 +137,7 @@
             this.loadExcelButton.TabIndex = 2;
             this.loadExcelButton.Text = "학생 목록 엑셀에서 불러오기";
             this.loadExcelButton.UseVisualStyleBackColor = true;
+            this.loadExcelButton.Click += new System.EventHandler(this.loadExcelButton_Click);
             // 
             // teacherName
             // 

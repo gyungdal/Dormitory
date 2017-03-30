@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace DormitoryGUI
 {
@@ -310,18 +311,96 @@ namespace DormitoryGUI
             MessageBox.Show("저장 완료");
         }
 
-        public static void ExcelDispose(Excel.Application excelApp, Excel.Workbook wb, Excel._Worksheet workSheet)
+        public void ExcelDispose(Excel.Application excelApp, Excel.Workbook wb, Excel._Worksheet workSheet)
         {
-            wb.SaveAs(@"D:\TEST.xls", Excel.XlFileFormat.xlWorkbookNormal, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-                Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-
-            wb.Close(Type.Missing, Type.Missing, Type.Missing);
-            excelApp.Quit();
-            releaseObject(excelApp);
-            releaseObject(workSheet);
-            releaseObject(wb);
+            try
+            {
+                wb.SaveAs(@"D:\TEST.xls", Excel.XlFileFormat.xlWorkbookNormal, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                    Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            }
+            finally
+            {
+                wb.Close(Type.Missing, Type.Missing, Type.Missing);
+                excelApp.Quit();
+                releaseObject(excelApp);
+                releaseObject(workSheet);
+                releaseObject(wb);
+            }
         }
-        
+
+        private void loadExcelButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            of.ShowDialog();
+            if(of.FileName.Length > 0)
+            {
+                MessageBox.Show(of.FileName);
+                Excel.Application excelApp = null;
+                Excel.Workbook wb = null;
+                Excel.Worksheet ws = null;
+                try
+                {
+                    excelApp = new Excel.Application();
+
+                    // 엑셀 파일 열기
+                    wb = excelApp.Workbooks.Open(of.FileName);
+
+                    // 첫번째 Worksheet
+                    ws = wb.Worksheets.get_Item(1) as Excel.Worksheet;
+
+                    // 현재 Worksheet에서 사용된 Range 전체를 선택
+                    Excel.Range rng = ws.UsedRange;
+
+                    // 현재 Worksheet에서 일부 범위만 선택
+                    // Excel.Range rng = ws.Range[ws.Cells[2, 1], ws.Cells[5, 3]];
+
+                    // Range 데이타를 배열 (One-based array)로
+                    object[,] data = rng.Value;
+                    List<KeyValuePair<int, string>> items = new List<KeyValuePair<int, string>>();
+                    for (int r = 1; r <= data.GetLength(0); r++)
+                    {
+                        string temp = "";
+                        for (int c = 1; c <= data.GetLength(1); c++)
+                        {
+                            if(data[r,c] != null)
+                            {
+                                int num;
+                                bool parse = Int32.TryParse(data[r,c].ToString(), out num);
+                                if (parse)
+                                {
+                                    if (data[r, c + 1] != null)
+                                    {
+                                        if (Regex.IsMatch(data[r, c + 1].ToString(), "[가-힣]{2,4}"))
+                                        {
+                                            KeyValuePair<int, string> item = new KeyValuePair<int, string>(num, data[r, c + 1].ToString());
+                                            items.Add(item);
+                                            c += 2;
+                                        }
+                                    }
+                                }
+                            }
+                            //temp += (data[r, c] != null ? data[r,c].ToString() : "") + " ";
+                            
+                        }
+                    }
+                    foreach(var item in items)
+                    {
+                        MessageBox.Show("KEY : " + item.Key + "\nValue : " + item.Value);
+                    }
+                    wb.Close(true);
+                    excelApp.Quit();
+                }
+                finally
+                {
+                    // Clean up
+                    releaseObject(ws);
+                    releaseObject(wb);
+                    releaseObject(excelApp);
+                }
+            }
+        }
+
         public void limitFunctionWithPermssion()
         {
             if (permissionType != Info.PERMISSION.ADMIN)
