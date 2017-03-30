@@ -55,14 +55,10 @@ namespace DormitoryGUI
             try
             {
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
-            }
-            catch (Exception e)
-            {
-                obj = null;
             }
             finally
             {
+                obj = null;
                 GC.Collect();
             }
         }
@@ -359,7 +355,6 @@ namespace DormitoryGUI
                     JArray items = new JArray();
                     for (int r = 1; r <= data.GetLength(0); r++)
                     {
-                        string temp = "";
                         for (int c = 1; c <= data.GetLength(1); c++)
                         {
                             if(data[r,c] != null)

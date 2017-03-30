@@ -49,7 +49,7 @@ namespace DormitoryGUI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             return null;

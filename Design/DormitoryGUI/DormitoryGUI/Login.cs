@@ -59,7 +59,7 @@ namespace DormitoryGUI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return JObject.Parse("{}");
             }
