@@ -161,7 +161,7 @@ namespace DormitoryGUI
                     memo = comboBox2.Items[comboBox2.SelectedIndex].ToString();
                 JArray uuids = new JArray();
                 foreach (ListViewItem item in this.listView2.Items)
-                {
+                {   
                     foreach (JObject json in studentList)
                     {
                         if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
@@ -172,19 +172,19 @@ namespace DormitoryGUI
                         }
                     }
                 }
-                post.Add("TEACHER_UUID", teacherUUID);
-                post.Add("STUDENT_UUID", uuids);
-                post.Add("POINT_TYPE", this.comboBox1.SelectedIndex);
-                post.Add("POINT_VALUE", this.comboBox3.SelectedItem.ToString());
-                post.Add("LOG_MEMO", memo);
+                post.Add("teacher", teacherUUID);
+                post.Add("students", uuids);
+                post.Add("type", this.comboBox1.SelectedIndex);
+                post.Add("value", this.comboBox3.SelectedItem.ToString());
+                post.Add("memo", memo);
                 foreach (JObject obj in scoreList)
                 {
                     if (obj["POINT_MEMO"].ToString().Equals(this.comboBox2.SelectedItem.ToString()))
                     {
-                        post.Add("POINT_UUID", Int32.Parse(obj["POINT_UUID"].ToString()));
+                        post.Add("uuid", Int32.Parse(obj["POINT_UUID"].ToString()));
                     }
                 }
-                MessageBox.Show(post.ToString());
+                Info.multiJson(Info.Server.GIVE_SCORE, post);
             }
         }
 

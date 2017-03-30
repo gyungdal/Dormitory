@@ -21,6 +21,7 @@ namespace DormitoryGUI
             public const string GET_DETAIL_DATA = SERVER_URL + "info/detail";
             public const string GET_SCORE_DATA = SERVER_URL + "scoreinfo/get";
             public const string ADD_SCORE_INFO = SERVER_URL + "scoreinfo/add";
+            public const string GIVE_SCORE = SERVER_URL + "score/add";
         }
         public static object multiJson(string url, object json)
         {
