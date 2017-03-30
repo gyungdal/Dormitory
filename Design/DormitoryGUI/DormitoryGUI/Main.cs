@@ -257,6 +257,68 @@ namespace DormitoryGUI
             }
         }
 
+        private void saveExcelButton_Click(object sender, EventArgs e)
+        {
+            Excel.Application app = new Excel.Application();
+            Excel.Workbook wb = app.Workbooks.Add(true);
+            Excel._Worksheet sheet = wb.Worksheets.Item[1] as Excel._Worksheet;
+            sheet.Cells[1, 2] = "TEST";
+            JArray array = (JArray)Info.multiJson(Info.Server.GET_EXCEL_DATA, "");
+            List<ExcelItem> items = new List<ExcelItem>();
+            foreach (JObject json in studentList)
+            {
+                ExcelItem item = new ExcelItem();
+                item.num = Int32.Parse(json["USER_SCHOOL_NUMBER"].ToString());
+                item.room_number = Int32.Parse(json["USER_SCHOOL_ROOM_NUMBER"].ToString());
+                item.name = json["USER_NAME"].ToString();
+                
+                JObject jobj = new JObject();
+                jobj.Add("user_uuid", json["USER_UUID"].ToString());
+                JArray temp = (JArray)Info.multiJson(Info.Server.GET_DETAIL_DATA, jobj);
+                int good = 0, bad = 0;
+                foreach(JObject t in temp)
+                {
+                    if (t["POINT_TYPE"].ToString().Equals("1"))
+                        good += Int32.Parse(t["POINT_VALUE"].ToString());
+                    else
+                        bad += Int32.Parse(t["POINT_VALUE"].ToString());
+                }
+                item.good_point = good;
+                item.bad_point = bad;
+                items.Add(item);
+            }
+           
+            sheet.Cells[1, 1] = "학번";
+            sheet.Cells[1, 2] = "이름";
+            sheet.Cells[1, 3] = "호실";
+            sheet.Cells[1, 4] = "상점";
+            sheet.Cells[1, 5] = "벌점";
+            int i = 2;
+            foreach (ExcelItem ie in items)
+            {
+                sheet.Cells[i, 1] = ie.num;
+                sheet.Cells[i, 2] = ie.name;
+                sheet.Cells[i, 3] = ie.room_number;
+                sheet.Cells[i, 4] = ie.good_point;
+                sheet.Cells[i, 5] = ie.bad_point;
+                i += 1;
+            }
+            ExcelDispose(app, wb, sheet);
+            MessageBox.Show("저장 완료");
+        }
+
+        public static void ExcelDispose(Excel.Application excelApp, Excel.Workbook wb, Excel._Worksheet workSheet)
+        {
+            wb.SaveAs(@"D:\TEST.xls", Excel.XlFileFormat.xlWorkbookNormal, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+            wb.Close(Type.Missing, Type.Missing, Type.Missing);
+            excelApp.Quit();
+            releaseObject(excelApp);
+            releaseObject(workSheet);
+            releaseObject(wb);
+        }
+        
         public void limitFunctionWithPermssion()
         {
             if (permissionType != Info.PERMISSION.ADMIN)

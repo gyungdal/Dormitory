@@ -127,6 +127,7 @@
             this.saveExcelButton.TabIndex = 2;
             this.saveExcelButton.Text = "현재 내용 엑셀로 저장하기";
             this.saveExcelButton.UseVisualStyleBackColor = true;
+            this.saveExcelButton.Click += new System.EventHandler(this.saveExcelButton_Click);
             // 
             // loadExcelButton
             // 
