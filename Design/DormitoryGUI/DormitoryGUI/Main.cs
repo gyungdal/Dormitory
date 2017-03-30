@@ -123,7 +123,7 @@ namespace DormitoryGUI
             this.date.Text = DateTime.Now.ToString("yyyy/MM/dd");
             this.teacherName.Text = name;
             this.teacherName.Enabled = this.date.Enabled = false;
-            object obj = multiJson(Info.Server.GET_MASTER_DATA, "");
+            object obj = Info.multiJson(Info.Server.GET_MASTER_DATA, "");
             studentList = (JArray)obj;
             foreach(JObject json in studentList)
             {
@@ -132,7 +132,7 @@ namespace DormitoryGUI
                     json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
                     json["USER_NAME"].ToString()}));
             }
-            obj = multiJson(Info.Server.GET_SCORE_DATA, "");
+            obj = Info.multiJson(Info.Server.GET_SCORE_DATA, "");
             scoreList = (JArray)obj;
         }
 
@@ -146,39 +146,11 @@ namespace DormitoryGUI
         {
             ListControl list = new ListControl();
             list.Show();
+            list.FormClosed += (s, o) => {
+                update();
+            };
         }
-
-        //보내기도 하고 받기도하는 함수인데 이름 정하기 고민된다.
-        private object multiJson(string url, object json)
-        {
-            try
-            {
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                byte[] postBody = Encoding.UTF8.GetBytes(json.ToString());
-                using (Stream stream = httpWebRequest.GetRequestStream())
-                {
-                    stream.Write(postBody, 0, postBody.Length);
-                    using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
-                    {
-                        using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                        {
-                            string result = streamReader.ReadToEnd();
-                            if (result.StartsWith("["))
-                                return JArray.Parse(result);
-                            return JObject.Parse(result);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-            return null;
-        }
-
+        
         private void giveScoreButton_Click(object sender, EventArgs e)
         {
             if (this.comboBox3.SelectedItem != null)
@@ -253,7 +225,7 @@ namespace DormitoryGUI
                         int uuid = Int32.Parse(json["USER_UUID"].ToString());
                         JObject jobj = new JObject();
                         jobj.Add("user_uuid", uuid);
-                        object temp = multiJson(Info.Server.GET_DETAIL_DATA, jobj);
+                        object temp = Info.multiJson(Info.Server.GET_DETAIL_DATA, jobj);
                         if(temp == null)
                             return;
                         

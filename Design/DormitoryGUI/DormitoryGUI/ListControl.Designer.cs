@@ -80,13 +80,11 @@
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "상점",
-            "벌점"});
             this.comboBox1.Location = new System.Drawing.Point(12, 21);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(571, 23);
             this.comboBox1.TabIndex = 3;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // groupBox1
             // 
@@ -113,21 +111,11 @@
             this.addButton.TabIndex = 7;
             this.addButton.Text = "추가";
             this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // maxPoint
             // 
             this.maxPoint.FormattingEnabled = true;
-            this.maxPoint.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"});
             this.maxPoint.Location = new System.Drawing.Point(194, 316);
             this.maxPoint.Name = "maxPoint";
             this.maxPoint.Size = new System.Drawing.Size(121, 23);
@@ -155,12 +143,12 @@
             "7",
             "8",
             "9",
-            "10",
-            "사용자 입력"});
+            "10"});
             this.minScore.Location = new System.Drawing.Point(30, 316);
             this.minScore.Name = "minScore";
             this.minScore.Size = new System.Drawing.Size(121, 23);
             this.minScore.TabIndex = 4;
+            this.minScore.SelectedIndexChanged += new System.EventHandler(this.minScore_SelectedIndexChanged);
             // 
             // label2
             // 

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +20,37 @@ namespace DormitoryGUI
             public const string GET_MASTER_DATA = SERVER_URL + "info/master";
             public const string GET_DETAIL_DATA = SERVER_URL + "info/detail";
             public const string GET_SCORE_DATA = SERVER_URL + "scoreinfo/get";
+            public const string ADD_SCORE_INFO = SERVER_URL + "scoreinfo/add";
+        }
+        public static object multiJson(string url, object json)
+        {
+            try
+            {
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                byte[] postBody = Encoding.UTF8.GetBytes(json.ToString());
+                using (Stream stream = httpWebRequest.GetRequestStream())
+                {
+                    stream.Write(postBody, 0, postBody.Length);
+                    using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
+                    {
+                        using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            string result = streamReader.ReadToEnd();
+                            if (result.StartsWith("["))
+                                return JArray.Parse(result);
+                            if (result.StartsWith("{"))
+                                return JObject.Parse(result);
+                            return null;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+            }
+            return null;
         }
         public enum PERMISSION { ADMIN, DORMITORY_TEACHER, NORMAL_TEACHER, ERROR };
     }

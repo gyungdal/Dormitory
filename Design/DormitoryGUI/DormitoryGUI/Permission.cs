@@ -25,7 +25,7 @@ namespace DormitoryGUI
 
         private void setPermission()
         {
-            JArray array = (JArray)multiJson(Info.Server.GET_PERMISSION_URL, "");
+            JArray array = (JArray)Info.multiJson(Info.Server.GET_PERMISSION_URL, "");
             foreach(JObject obj in array)
             {
                 switch (Int32.Parse(obj["PERMISSION_TYPE"].ToString()))
@@ -64,38 +64,7 @@ namespace DormitoryGUI
             inner.Add(2);
             post.Add(inner);
             //MessageBox.Show(post.ToString());
-            multiJson(Info.Server.SET_PERMSSION_URL, post);
-        }
-        private object multiJson(string url, object json)
-        {
-            try
-            {
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                byte[] postBody = Encoding.UTF8.GetBytes(json.ToString());
-                using (Stream stream = httpWebRequest.GetRequestStream())
-                {
-                    stream.Write(postBody, 0, postBody.Length);
-                    using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
-                    {
-                        using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                        {
-                            string result = streamReader.ReadToEnd();
-                            if (result.StartsWith("["))
-                                return JArray.Parse(result);
-                            if(result.StartsWith("{"))
-                                return JObject.Parse(result);
-                            return null;
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-            return null;
+            Info.multiJson(Info.Server.SET_PERMSSION_URL, post);
         }
     }
 
