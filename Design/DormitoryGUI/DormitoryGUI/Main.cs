@@ -368,8 +368,8 @@ namespace DormitoryGUI
                                         if (Regex.IsMatch(data[r, c + 1].ToString(), "[가-힣]{2,4}"))
                                         {
                                             JObject obj = new JObject();
-                                            obj.Add("USER_NUM", num);
-                                            obj.Add("USER_NAME", data[r, c + 1].ToString());
+                                            obj.Add("num", num);
+                                            obj.Add("name", data[r, c + 1].ToString());
                                             items.Add(obj);
                                             c += 2;
                                         }
