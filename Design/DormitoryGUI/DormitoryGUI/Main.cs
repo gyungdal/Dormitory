@@ -45,6 +45,7 @@ namespace DormitoryGUI
             this.comboBox1.Items.Add("상점");
             this.comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
             this.comboBox2.SelectedIndexChanged += ComboBox2_SelectedIndexChanged;
+           
         }
 
         #region 메모리해제
@@ -192,6 +193,68 @@ namespace DormitoryGUI
         {
             if(this.listView2.SelectedItems.Count != 0)
                this.listView2.Items.RemoveAt(this.listView2.SelectedItems[0].Index);
+        }
+
+        //학번 검색 기능
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string num = this.schoolNum.Text;
+            if (num.Length != 0)
+            {
+                this.listView1.Items.Clear();
+                foreach (JObject json in studentList)
+                {
+                    if (json["USER_SCHOOL_NUMBER"].ToString().Equals(num))
+                    {
+                        this.listView1.Items.Add(new ListViewItem(new string[] {
+                        json["USER_SCHOOL_NUMBER"].ToString(),
+                        json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                        json["USER_NAME"].ToString()}));
+                    }
+                }
+            }
+            else
+            {
+                this.listView1.Items.Clear();
+                foreach (JObject json in studentList)
+                {
+                    this.listView1.Items.Add(new ListViewItem(new string[] {
+                    json["USER_SCHOOL_NUMBER"].ToString(),
+                    json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                    json["USER_NAME"].ToString()}));
+                }
+            }
+        }
+
+        //이름 검색 기능
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string name = this.schoolName.Text;
+            if (name.Length != 0)
+            {
+                this.listView1.Items.Clear();
+                foreach (JObject json in studentList)
+                {
+                    if (json["USER_NAME"].ToString().Equals(name))
+                    {
+                        this.listView1.Items.Add(new ListViewItem(new string[] {
+                        json["USER_SCHOOL_NUMBER"].ToString(),
+                        json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                        json["USER_NAME"].ToString()}));
+                    }
+                }
+            }
+            else
+            {
+                this.listView1.Items.Clear();
+                foreach (JObject json in studentList)
+                {
+                    this.listView1.Items.Add(new ListViewItem(new string[] {
+                    json["USER_SCHOOL_NUMBER"].ToString(),
+                    json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                    json["USER_NAME"].ToString()}));
+                }
+            }
         }
 
         public void limitFunctionWithPermssion()
