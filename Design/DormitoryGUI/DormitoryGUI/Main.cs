@@ -335,7 +335,6 @@ namespace DormitoryGUI
             of.ShowDialog();
             if(of.FileName.Length > 0)
             {
-                MessageBox.Show(of.FileName);
                 Excel.Application excelApp = null;
                 Excel.Workbook wb = null;
                 Excel.Worksheet ws = null;
@@ -357,7 +356,7 @@ namespace DormitoryGUI
 
                     // Range 데이타를 배열 (One-based array)로
                     object[,] data = rng.Value;
-                    List<KeyValuePair<int, string>> items = new List<KeyValuePair<int, string>>();
+                    JArray items = new JArray();
                     for (int r = 1; r <= data.GetLength(0); r++)
                     {
                         string temp = "";
@@ -373,21 +372,18 @@ namespace DormitoryGUI
                                     {
                                         if (Regex.IsMatch(data[r, c + 1].ToString(), "[가-힣]{2,4}"))
                                         {
-                                            KeyValuePair<int, string> item = new KeyValuePair<int, string>(num, data[r, c + 1].ToString());
-                                            items.Add(item);
+                                            JObject obj = new JObject();
+                                            obj.Add("USER_NUM", num);
+                                            obj.Add("USER_NAME", data[r, c + 1].ToString());
+                                            items.Add(obj);
                                             c += 2;
                                         }
                                     }
                                 }
                             }
-                            //temp += (data[r, c] != null ? data[r,c].ToString() : "") + " ";
-                            
                         }
                     }
-                    foreach(var item in items)
-                    {
-                        MessageBox.Show("KEY : " + item.Key + "\nValue : " + item.Value);
-                    }
+                    MessageBox.Show(items.ToString());
                     wb.Close(true);
                     excelApp.Quit();
                 }
