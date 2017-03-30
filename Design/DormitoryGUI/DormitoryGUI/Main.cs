@@ -126,6 +126,7 @@ namespace DormitoryGUI
             this.teacherName.Enabled = this.date.Enabled = false;
             object obj = Info.multiJson(Info.Server.GET_MASTER_DATA, "");
             studentList = (JArray)obj;
+            this.listView1.Items.Clear();
             foreach(JObject json in studentList)
             {
                 this.listView1.Items.Add(new ListViewItem(new string[] {
@@ -152,8 +153,9 @@ namespace DormitoryGUI
             };
         }
         
-        private void giveScoreButton_Click(object sender, EventArgs e)
+        private async void giveScoreButton_Click(object sender, EventArgs e)
         {
+            
             if (this.comboBox3.SelectedItem != null)
             {
                 JObject post = new JObject();
@@ -186,6 +188,7 @@ namespace DormitoryGUI
                     }
                 }
                 Info.multiJson(Info.Server.GIVE_SCORE, post);
+                update();
             }
         }
 
