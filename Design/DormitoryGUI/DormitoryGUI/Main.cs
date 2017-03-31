@@ -128,7 +128,7 @@ namespace DormitoryGUI
             {
                 this.listView1.Items.Add(new ListViewItem(new string[] {
                     json["USER_SCHOOL_NUMBER"].ToString(),
-                    json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                    json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL",
                     json["USER_NAME"].ToString()}));
             }
             obj = Info.multiJson(Info.Server.GET_SCORE_DATA, "");
@@ -150,7 +150,7 @@ namespace DormitoryGUI
             };
         }
         
-        private async void giveScoreButton_Click(object sender, EventArgs e)
+        private void giveScoreButton_Click(object sender, EventArgs e)
         {
             
             if (this.comboBox3.SelectedItem != null)
@@ -165,7 +165,7 @@ namespace DormitoryGUI
                     foreach (JObject json in studentList)
                     {
                         if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
-                        json["USER_SCHOOL_ROOM_NUMBER"].ToString().Equals(item.SubItems[1].Text) &
+                        (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
                         json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
                         {
                             uuids.Add(Int32.Parse(json["USER_UUID"].ToString()));
@@ -208,7 +208,7 @@ namespace DormitoryGUI
                     {
                         this.listView1.Items.Add(new ListViewItem(new string[] {
                         json["USER_SCHOOL_NUMBER"].ToString(),
-                        json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                        json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL",
                         json["USER_NAME"].ToString()}));
                     }
                 }
@@ -239,7 +239,7 @@ namespace DormitoryGUI
                     {
                         this.listView1.Items.Add(new ListViewItem(new string[] {
                         json["USER_SCHOOL_NUMBER"].ToString(),
-                        json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                       (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL"),
                         json["USER_NAME"].ToString()}));
                     }
                 }
@@ -251,7 +251,7 @@ namespace DormitoryGUI
                 {
                     this.listView1.Items.Add(new ListViewItem(new string[] {
                     json["USER_SCHOOL_NUMBER"].ToString(),
-                    json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                    (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL"),
                     json["USER_NAME"].ToString()}));
                 }
             }
@@ -269,7 +269,6 @@ namespace DormitoryGUI
             {
                 ExcelItem item = new ExcelItem();
                 item.num = Int32.Parse(json["USER_SCHOOL_NUMBER"].ToString());
-                item.room_number = Int32.Parse(json["USER_SCHOOL_ROOM_NUMBER"].ToString());
                 item.name = json["USER_NAME"].ToString();
                 
                 JObject jobj = new JObject();
@@ -290,7 +289,6 @@ namespace DormitoryGUI
            
             sheet.Cells[1, 1] = "학번";
             sheet.Cells[1, 2] = "이름";
-            sheet.Cells[1, 3] = "호실";
             sheet.Cells[1, 4] = "상점";
             sheet.Cells[1, 5] = "벌점";
             int i = 2;
@@ -298,7 +296,6 @@ namespace DormitoryGUI
             {
                 sheet.Cells[i, 1] = ie.num;
                 sheet.Cells[i, 2] = ie.name;
-                sheet.Cells[i, 3] = ie.room_number;
                 sheet.Cells[i, 4] = ie.good_point;
                 sheet.Cells[i, 5] = ie.bad_point;
                 i += 1;
@@ -378,7 +375,8 @@ namespace DormitoryGUI
                             }
                         }
                     }
-                    MessageBox.Show(items.ToString());
+                    //MessageBox.Show(items.ToString());
+                    Info.multiJson(Info.Server.SET_STUDENT_DATA, items);
                     wb.Close(true);
                     excelApp.Quit();
                 }
@@ -417,7 +415,7 @@ namespace DormitoryGUI
                 foreach (JObject json in studentList)
                 {
                     if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
-                    json["USER_SCHOOL_ROOM_NUMBER"].ToString().Equals(item.SubItems[1].Text) &
+                    (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
                     json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
                     {
                         int uuid = Int32.Parse(json["USER_UUID"].ToString());
