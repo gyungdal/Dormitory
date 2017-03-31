@@ -128,7 +128,7 @@ namespace DormitoryGUI
             {
                 this.listView1.Items.Add(new ListViewItem(new string[] {
                     json["USER_SCHOOL_NUMBER"].ToString(),
-                    json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL",
+                    json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL",
                     json["USER_NAME"].ToString()}));
             }
             obj = Info.multiJson(Info.Server.GET_SCORE_DATA, "");
@@ -165,7 +165,7 @@ namespace DormitoryGUI
                     foreach (JObject json in studentList)
                     {
                         if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
-                        (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
+                        (json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
                         json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
                         {
                             uuids.Add(Int32.Parse(json["USER_UUID"].ToString()));
@@ -208,7 +208,7 @@ namespace DormitoryGUI
                     {
                         this.listView1.Items.Add(new ListViewItem(new string[] {
                         json["USER_SCHOOL_NUMBER"].ToString(),
-                        json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL",
+                        json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL",
                         json["USER_NAME"].ToString()}));
                     }
                 }
@@ -220,7 +220,7 @@ namespace DormitoryGUI
                 {
                     this.listView1.Items.Add(new ListViewItem(new string[] {
                     json["USER_SCHOOL_NUMBER"].ToString(),
-                    json["USER_SCHOOL_ROOM_NUMBER"].ToString(),
+                    json["user_school_room_number"].ToString(),
                     json["USER_NAME"].ToString()}));
                 }
             }
@@ -239,7 +239,7 @@ namespace DormitoryGUI
                     {
                         this.listView1.Items.Add(new ListViewItem(new string[] {
                         json["USER_SCHOOL_NUMBER"].ToString(),
-                       (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL"),
+                       (json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL"),
                         json["USER_NAME"].ToString()}));
                     }
                 }
@@ -251,7 +251,7 @@ namespace DormitoryGUI
                 {
                     this.listView1.Items.Add(new ListViewItem(new string[] {
                     json["USER_SCHOOL_NUMBER"].ToString(),
-                    (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL"),
+                    (json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL"),
                     json["USER_NAME"].ToString()}));
                 }
             }
@@ -415,7 +415,7 @@ namespace DormitoryGUI
                 foreach (JObject json in studentList)
                 {
                     if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
-                    (json["USER_SCHOOL_ROOM_NUMBER"] != null ? json["USER_SCHOOL_ROOM_NUMBER"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
+                    (json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
                     json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
                     {
                         int uuid = Int32.Parse(json["USER_UUID"].ToString());
