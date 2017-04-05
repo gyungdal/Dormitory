@@ -46,7 +46,13 @@ namespace DormitoryGUI
             this.comboBox1.Items.Add("상점");
             this.comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
             this.comboBox2.SelectedIndexChanged += ComboBox2_SelectedIndexChanged;
-           
+            this.dataGridView1.ColumnHeaderMouseClick += DataGridView1_ColumnHeaderMouseClick;
+        }
+
+        private void DataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            
+            dataGridView1.Sort(this.dataGridView1.Columns[e.ColumnIndex], ListSortDirection.Ascending);
         }
 
         #region 메모리해제
@@ -422,8 +428,9 @@ namespace DormitoryGUI
             JArray result = (JArray)temp;
             JArray view = new JArray();
             int good = 0, bad = 0;
-            foreach (JObject obj in result)
+            for (int i = result.Count-1;i>=0;i--)
             {
+                JObject obj = (JObject)result[i];
                 JObject t = new JObject();
                 t.Add("항목명", obj["POINT_MEMO"].ToString());
                 t.Add("상/벌점 분류", obj["POINT_TYPE"].ToString().Equals("1") ? "상점" : "벌점");
