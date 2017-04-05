@@ -25,6 +25,7 @@ namespace DormitoryGUI
         private bool canEditStudent, canEditScore;
         private string name;
         private JArray studentList, scoreList;
+        private BindingList<ScoreListItem> scoreViewList;
         private int last;
         internal int TeacherUUID { get => teacherUUID; set => teacherUUID = value; }
         internal KeyValuePair<bool, bool> PermissionData {
@@ -48,11 +49,11 @@ namespace DormitoryGUI
             this.comboBox2.SelectedIndexChanged += ComboBox2_SelectedIndexChanged;
             this.dataGridView1.ColumnHeaderMouseClick += DataGridView1_ColumnHeaderMouseClick;
         }
-
+        
+        //TODO : sort by columns
         private void DataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            
-            dataGridView1.Sort(this.dataGridView1.Columns[e.ColumnIndex], ListSortDirection.Ascending);
+            dataGridView1.Sort(dataGridView1.Columns[e.ColumnIndex], ListSortDirection.Ascending);
         }
 
         #region 메모리해제
@@ -426,26 +427,26 @@ namespace DormitoryGUI
                 return;
 
             JArray result = (JArray)temp;
-            JArray view = new JArray();
+            scoreViewList = new BindingList<ScoreListItem>();
             int good = 0, bad = 0;
             for (int i = result.Count-1;i>=0;i--)
             {
                 JObject obj = (JObject)result[i];
-                JObject t = new JObject();
-                t.Add("항목명", obj["POINT_MEMO"].ToString());
-                t.Add("상/벌점 분류", obj["POINT_TYPE"].ToString().Equals("1") ? "상점" : "벌점");
-                t.Add("점수", obj["POINT_VALUE"].ToString());
+                ScoreListItem t = new ScoreListItem();
+                t.항목명 = obj["POINT_MEMO"].ToString();
+                t.상벌점_분류 = obj["POINT_TYPE"].ToString().Equals("1") ? "상점" : "벌점";
+                t.점수 = obj["POINT_VALUE"].ToString();
                 if (obj["POINT_TYPE"].ToString().Equals("1"))
                     good += Int32.Parse(obj["POINT_VALUE"].ToString());
                 else
                     bad += Int32.Parse(obj["POINT_VALUE"].ToString());
-                t.Add("메모", obj["LOG_MEMO"].ToString());
-                t.Add("부여 시간", obj["CREATE_TIME"].ToString());
-                t.Add("총 상점", good);
-                t.Add("총 벌점", bad);
-                view.Add(t);
+                t.메모 = obj["LOG_MEMO"].ToString();
+                t.부여시간 = DateTime.Parse(obj["CREATE_TIME"].ToString());
+                t.총_상점 = good;
+                t.총_벌점 =bad;
+                scoreViewList.Add(t);
             }
-            this.dataGridView1.DataSource = JsonConvert.DeserializeObject<JArray>(view.ToString());
+            this.dataGridView1.DataSource = scoreViewList;
             this.dataGridView1.AllowUserToAddRows = false;
 
         }
@@ -464,34 +465,7 @@ namespace DormitoryGUI
                     {
                         int uuid = Int32.Parse(json["USER_UUID"].ToString());
                         last = uuid;
-                        JObject jobj = new JObject();
-                        jobj.Add("user_uuid", uuid);
-                        object temp = Info.multiJson(Info.Server.GET_DETAIL_DATA, jobj);
-                        if(temp == null)
-                            return;
-                        
-                        JArray result = (JArray)temp;
-                        JArray view = new JArray();
-                        int good = 0, bad = 0;
-                        foreach(JObject obj in result)
-                        {
-                            JObject t = new JObject();
-                            t.Add("항목명", obj["POINT_MEMO"].ToString());
-                            t.Add("상/벌점 분류", obj["POINT_TYPE"].ToString().Equals("1") ? "상점" : "벌점");
-                            t.Add("점수", obj["POINT_VALUE"].ToString());
-                            if (obj["POINT_TYPE"].ToString().Equals("1"))
-                                good += Int32.Parse(obj["POINT_VALUE"].ToString());
-                            else
-                                bad += Int32.Parse(obj["POINT_VALUE"].ToString());
-                            t.Add("메모", obj["LOG_MEMO"].ToString());
-                            t.Add("부여 시간", obj["CREATE_TIME"].ToString());
-                            t.Add("총 상점", good);
-                            t.Add("총 벌점", bad);
-                            view.Add(t);
-                        }
-                        this.dataGridView1.DataSource = JsonConvert.DeserializeObject<JArray>(view.ToString());
-                        this.dataGridView1.AllowUserToAddRows = false;
-                        
+                        refreshDetailView(uuid);
                     }
                 } 
             }
