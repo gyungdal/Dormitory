@@ -25,7 +25,7 @@ namespace DormitoryGUI
         private bool canEditStudent, canEditScore;
         private string name;
         private JArray studentList, scoreList;
-       
+        private int last;
         internal int TeacherUUID { get => teacherUUID; set => teacherUUID = value; }
         internal KeyValuePair<bool, bool> PermissionData {
             get => new KeyValuePair<bool, bool>(canEditStudent, canEditScore);
@@ -149,43 +149,48 @@ namespace DormitoryGUI
                 update();
             };
         }
-        
+
         private void giveScoreButton_Click(object sender, EventArgs e)
         {
-            
-            if (this.comboBox3.SelectedItem != null)
+
+            if (this.listView2.Items.Count != 0)
             {
-                JObject post = new JObject();
-                string memo = Interaction.InputBox("메모를 입력하시겠습니까?", "메모", "");
-                if (memo.Trim().Length == 0)
-                    memo = comboBox2.Items[comboBox2.SelectedIndex].ToString();
-                JArray uuids = new JArray();
-                foreach (ListViewItem item in this.listView2.Items)
-                {   
-                    foreach (JObject json in studentList)
+                if (this.comboBox3.SelectedItem != null)
+                {
+                    JObject post = new JObject();
+                    string memo = Interaction.InputBox("메모를 입력하시겠습니까?", "메모", "");
+                    if (memo.Trim().Length == 0)
+                        memo = comboBox2.Items[comboBox2.SelectedIndex].ToString();
+                    JArray uuids = new JArray();
+                    foreach (ListViewItem item in this.listView2.Items)
                     {
-                        if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
-                        (json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
-                        json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
+                        foreach (JObject json in studentList)
                         {
-                            uuids.Add(Int32.Parse(json["USER_UUID"].ToString()));
+                            if (json["USER_SCHOOL_NUMBER"].ToString().Equals(item.SubItems[0].Text) &
+                            (json["user_school_room_number"] != null ? json["user_school_room_number"].ToString() : "NULL").Equals(item.SubItems[1].Text) &
+                            json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
+                            {
+                                uuids.Add(Int32.Parse(json["USER_UUID"].ToString()));
+                            }
                         }
                     }
-                }
-                post.Add("teacher", teacherUUID);
-                post.Add("students", uuids);
-                post.Add("type", this.comboBox1.SelectedIndex);
-                post.Add("value", this.comboBox3.SelectedItem.ToString());
-                post.Add("memo", memo);
-                foreach (JObject obj in scoreList)
-                {
-                    if (obj["POINT_MEMO"].ToString().Equals(this.comboBox2.SelectedItem.ToString()))
+                    post.Add("teacher", teacherUUID);
+                    post.Add("students", uuids);
+                    post.Add("type", this.comboBox1.SelectedIndex);
+                    post.Add("value", this.comboBox3.SelectedItem.ToString());
+                    post.Add("memo", memo);
+                    foreach (JObject obj in scoreList)
                     {
-                        post.Add("uuid", Int32.Parse(obj["POINT_UUID"].ToString()));
+                        if (obj["POINT_MEMO"].ToString().Equals(this.comboBox2.SelectedItem.ToString()))
+                        {
+                            post.Add("uuid", Int32.Parse(obj["POINT_UUID"].ToString()));
+                        }
                     }
+
+                    Info.multiJson(Info.Server.GIVE_SCORE, post);
+                    refreshDetailView(last);
+                    update();
                 }
-                Info.multiJson(Info.Server.GIVE_SCORE, post);
-                update();
             }
         }
 
@@ -405,6 +410,38 @@ namespace DormitoryGUI
                 this.saveExcelButton.Enabled = false;
             }
         }
+        private void refreshDetailView(int uuid)
+        {
+
+            JObject jobj = new JObject();
+            jobj.Add("user_uuid", uuid);
+            object temp = Info.multiJson(Info.Server.GET_DETAIL_DATA, jobj);
+            if (temp == null)
+                return;
+
+            JArray result = (JArray)temp;
+            JArray view = new JArray();
+            int good = 0, bad = 0;
+            foreach (JObject obj in result)
+            {
+                JObject t = new JObject();
+                t.Add("항목명", obj["POINT_MEMO"].ToString());
+                t.Add("상/벌점 분류", obj["POINT_TYPE"].ToString().Equals("1") ? "상점" : "벌점");
+                t.Add("점수", obj["POINT_VALUE"].ToString());
+                if (obj["POINT_TYPE"].ToString().Equals("1"))
+                    good += Int32.Parse(obj["POINT_VALUE"].ToString());
+                else
+                    bad += Int32.Parse(obj["POINT_VALUE"].ToString());
+                t.Add("메모", obj["LOG_MEMO"].ToString());
+                t.Add("부여 시간", obj["CREATE_TIME"].ToString());
+                t.Add("총 상점", good);
+                t.Add("총 벌점", bad);
+                view.Add(t);
+            }
+            this.dataGridView1.DataSource = JsonConvert.DeserializeObject<JArray>(view.ToString());
+            this.dataGridView1.AllowUserToAddRows = false;
+
+        }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -419,6 +456,7 @@ namespace DormitoryGUI
                     json["USER_NAME"].ToString().Equals(item.SubItems[2].Text))
                     {
                         int uuid = Int32.Parse(json["USER_UUID"].ToString());
+                        last = uuid;
                         JObject jobj = new JObject();
                         jobj.Add("user_uuid", uuid);
                         object temp = Info.multiJson(Info.Server.GET_DETAIL_DATA, jobj);

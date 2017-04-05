@@ -1,0 +1,14 @@
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Release\DormitoryGUI.exe.config
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Release\DormitoryGUI.exe
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Release\DormitoryGUI.pdb
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Release\Newtonsoft.Json.dll
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\bin\Release\Newtonsoft.Json.xml
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.csproj.ResolveComReference.cache
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.ListControl.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.Login.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.Main.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.Properties.Resources.resources
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.csproj.GenerateResource.Cache
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.exe
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.pdb
+D:\Develop\Project\dormitory\Design\DormitoryGUI\DormitoryGUI\obj\Release\DormitoryGUI.csprojResolveAssemblyReference.cache
